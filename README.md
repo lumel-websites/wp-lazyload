@@ -3,7 +3,7 @@
 * **Tags:** lazy load single videos/GIFs/iframes mainly for increasing your Google PageSpeed Score
 * **Requires at least:** 5.8.1
 * **Tested up to:** 6.1
-* **Stable tag:** 1.0.0
+* **Stable tag:** 1.0.1
 * **License:** GPLv2 or later
 * **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,12 +25,16 @@ Key Features:
 
 ### Installation
 
-1. Upload `wp-lazyload-1.0.0.zip` to the `/wp-content/plugins/` directory
+1. Upload `wp-lazyload-1.0.1.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 ---
 
 ### Changelog
+
+**1.0.1**
+* **Feat:** Added play icon attribute `[wp_lazyload type="video/iframe/GIF" mode="inline" provider="youtube/vimeo" url="youtube/vimeo/GIF url" poster="posterimage" lazy_loading="true/false" icon="play/button/hidden" play_icon="hide/hover"]`.
+* **Feat:** Popup will appear when add a class `wp-lazy-link` to the link.
 
 **1.0.0**
 * Initial Release. 

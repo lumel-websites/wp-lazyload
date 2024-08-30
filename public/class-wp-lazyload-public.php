@@ -120,6 +120,7 @@ class Wp_Lazyload_Public {
 				'url' => '',
 				'poster' => '',
 				'poster_lazy_loading' => 'true',
+				'play_icon' => '',
 				'icon' => 'button',
 				'provider_width' => '100%',
 				'provider_height' => '100%',
@@ -136,7 +137,8 @@ class Wp_Lazyload_Public {
 		$poster 	= $atts[ 'poster' ];
 		$loading	= $atts[ 'poster_lazy_loading' ];
 		$pagetitle	= get_the_title($pageid);
-		$play_icon	= $atts[ 'icon' ];
+		$icon	= $atts[ 'icon' ];
+		$play_icon	= $atts[ 'play_icon' ];
 		$provider_width	= $atts[ 'provider_width' ];
 		$provider_height	= $atts[ 'provider_height' ];
 		
@@ -234,12 +236,12 @@ class Wp_Lazyload_Public {
 			</div>
 			<div class="lazy-overlay <?php if( $type == "gif") {  echo "gif-image";  } ?>">
 				<img class="lazy-overlay-image" alt="<?php echo $pagetitle; ?>" src="<?php echo $poster; ?>" <?php echo $dimentions; ?> <?php echo ( $loading == "true" ) ? 'loading="lazy"' : '';  ?> />
-				<?php if($play_icon=="play") { ?>
-					<div class="lazy-overlay-hover <?php if($play_icon=="hidden") { echo "icon-hide"; } ?>"></div>	
-					<div class="lazy-play-icon <?php if($play_icon=="hidden") { echo "icon-hide"; } ?>"></div>
+				<?php if($icon=="play") { ?>
+					<div class="lazy-overlay-hover <?php if($play_icon=="hide") { echo "icon-hide"; } ?> <?php if($play_icon=="hover") { echo "icon-hover"; } ?>"></div>	
+					<div class="lazy-play-icon <?php if($play_icon=="hide") { echo "icon-hide"; } ?> <?php if($play_icon=="hover") { echo "icon-hover"; } ?>"></div>
 				<?php } ?>
 
-				<?php if($play_icon=="button") { ?><div class="lazy-iframe-button"><?php echo "View interactive content"; ?></div><?php } ?>
+				<?php if($icon=="button") { ?><div class="lazy-iframe-button"><?php echo "View interactive content"; ?></div><?php } ?>
 			</div>	
 		</div>
 		<?php
