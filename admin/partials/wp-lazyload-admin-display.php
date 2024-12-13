@@ -8,8 +8,8 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/admin/partials
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/admin/partials
  */
 ?>
 

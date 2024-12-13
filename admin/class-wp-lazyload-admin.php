@@ -6,8 +6,8 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/admin
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/admin
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/admin
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/admin
  * @author     K Gopal Krishna <kg@lumel.com>
  */
 class Wp_Lazyload_Admin {
@@ -102,19 +102,19 @@ class Wp_Lazyload_Admin {
 	
     public function lazy_load_settings_init() {
     // Existing section
-	add_settings_section("lazy_load", "General Settings", null, "wp-lazy-load-settings");
+	add_settings_section("wp_lazyload", "General Settings", null, "wp-lazy-load-settings");
 
 	// Existing button configuration fields
-	add_settings_field("button_label", "Button Label", array( $this, "button_label_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("button_text_color", "Button Text Color", array( $this, "button_text_color_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("button_bg_color", "Button Background Color", array( $this, "button_bg_color_callback" ), "wp-lazy-load-settings", "lazy_load");
+	add_settings_field("button_label", "Button Label", array( $this, "button_label_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	add_settings_field("button_text_color", "Button Text Color", array( $this, "button_text_color_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	add_settings_field("button_bg_color", "Button Background Color", array( $this, "button_bg_color_callback" ), "wp-lazy-load-settings", "wp_lazyload");
 
 	// New fields for extended configuration
-	add_settings_field("play_icon", "Play Icon Visibility", array( $this, "play_icon_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("loading", "Loading", array( $this, "loading_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("provider_width", "Provider Width", array( $this, "provider_width_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("provider_height", "Provider Height", array( $this, "provider_height_callback" ), "wp-lazy-load-settings", "lazy_load");
-	add_settings_field("mode", "Display Mode", array( $this, "mode_callback" ), "wp-lazy-load-settings", "lazy_load");
+	add_settings_field("play_icon", "Play Icon Visibility", array( $this, "play_icon_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	// add_settings_field("loading", "Loading", array( $this, "loading_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	add_settings_field("provider_width", "Provider Width", array( $this, "provider_width_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	add_settings_field("provider_height", "Provider Height", array( $this, "provider_height_callback" ), "wp-lazy-load-settings", "wp_lazyload");
+	add_settings_field("mode", "Display Mode", array( $this, "mode_callback" ), "wp-lazy-load-settings", "wp_lazyload");
 
 	// Register new settings
 	register_setting( 'wp-lazy-load-settings' , 'button_label');

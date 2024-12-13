@@ -22,7 +22,7 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
+ * @package    WP_Lazyload
  */
 
 // If uninstall not called from WordPress, then exit.

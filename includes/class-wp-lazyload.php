@@ -9,8 +9,8 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/includes
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/includes
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/includes
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload {
+class WP_Lazyload {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -175,7 +175,7 @@ class Wp_Lazyload {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'init', $plugin_public, 'add_lazy_load_shortcode' );
+		$this->loader->add_action( 'init', $plugin_public, 'add_wp_lazyload_shortcode' );
 
 	}
 

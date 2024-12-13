@@ -6,8 +6,8 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/public
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/public
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/public
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/public
  * @author     K Gopal Krishna <kg@lumel.com>
  */
 class Wp_Lazyload_Public
@@ -106,9 +106,9 @@ class Wp_Lazyload_Public
 	 *
 	 * @since 1.0.0
 	 */
-	public function add_lazy_load_shortcode()
+	public function add_wp_lazyload_shortcode()
 	{
-		add_shortcode('lazy_load', array($this, 'lazy_loading_shortcode_callback'));
+		add_shortcode('wp_lazyload', array($this, 'wp_lazy_loading_shortcode_callback'));
 	}
 
 	/**
@@ -116,194 +116,145 @@ class Wp_Lazyload_Public
 	 *
 	 * @since 1.0.0
 	 */
-	public function lazy_loading_shortcode_callback($atts)
+	public function wp_lazy_loading_shortcode_callback($atts)
 	{
 
-    // Merge shortcode attributes with global settings
-    $atts = shortcode_atts(
-        array(
-            'mode' => get_option('mode', 'inline'),
-            'provider' => 'youtube',
-            'url' => '',
-            'poster' => '',
-            'lazy_loading' => get_option('loading', 'true'),
-            'play_icon' => get_option('play_icon', 'show'),
-            'provider_width' => get_option('provider_width', ''),
-            'provider_height' => get_option('provider_height', ''),
-            'type' => 'video',
-            'button' => 'show',
-            'button_label' => get_option('button_label', 'View interactive content'),
-            'button_text_color' => get_option('button_text_color', '#3a3a3a'),
-            'button_bg_color' => get_option('button_bg_color', '#ffcd3d'),
-        ),
-        $atts,
-        'wp_lazyload'
-    );
+		$defaults = [
+			'mode' => get_option('mode', 'inline'),
+			'provider' => 'youtube',
+			'url' => '',
+			'poster' => '',
+			'lazy_loading' => 'true',
+			'play_icon' => get_option('play_icon', 'show'),
+			'provider_width' => get_option('provider_width', ''),
+			'provider_height' => get_option('provider_height', ''),
+			'type' => 'video',
+			'button' => 'show',
+			'button_label' => get_option('button_label', 'View interactive content'),
+			'button_text_color' => get_option('button_text_color', '#3a3a3a'),
+			'button_bg_color' => get_option('button_bg_color', '#ffcd3d'),
+		];
 
-    // Extract attributes
-    $mode = $atts['mode'];
-    $provider = $atts['provider'];
-    $url = $atts['url'];
-    $type = $atts['type'];
-    $poster = $atts['poster'];
-    $loading = $atts['lazy_loading'];
-    $play_icon = $atts['play_icon'];
-    $provider_width = $atts['provider_width'];
-    $provider_height = $atts['provider_height'];
-    $button = $atts['button'];
-    $button_label = $atts['button_label'];
-    $button_text_color = $atts['button_text_color'];
-    $button_bg_color = $atts['button_bg_color'];
 
-    $pageid = get_the_ID();
-    $pagetitle = get_the_title($pageid);
+		$atts = shortcode_atts($defaults, $atts, 'wp_lazyload');
 
-		if ($url == "") {
-			$output = '<p style="color:red;">[url] - Video URL is a required parameter';
-			return $output;
+		$page_id = get_the_ID();
+		$page_title = get_the_title($page_id);
+
+		if (empty($atts['url'])) {
+			return '<p style="color:red;">[url] - Video URL is a required parameter</p>';
 		}
-	
-		if ($provider == "gif") {
-			if ($poster == "") {
-				$output = '<p style="color:red;">[poster] - Poster image is a required parameter';
-				return $output;
-			}
+
+		if ($atts['provider'] === 'gif' && empty($atts['poster'])) {
+			return '<p style="color:red;">[poster] - Poster image is a required parameter</p>';
 		}
-	
-		if ($provider == "youtube" && $poster == "") {
-			$video_code = explode("=", $url)[1];
-			$poster = "https://i.ytimg.com/vi/$video_code/maxresdefault.jpg";
-		}
-	
-		if ($provider == "wistia" && $poster == "") {
-			$response = wp_remote_get("https://fast.wistia.net/oembed?url=$url&&embedType=async");
-			$response = json_decode($response['body'], true);
-			$poster = $response['thumbnail_url'];
-		}
-	
-		if ($provider == "vimeo" && $poster == "") {
-			$video_code = explode("/", $url)[3];
-			$poster = "https://vumbnail.com/$video_code.jpg";
-		}
-	
-		if ($provider == "gif" && $poster != "") {
-			$gif_code = $url;
-			$poster = $atts['poster'];
-		}
-	
+
+		$poster = $atts['poster'] ?: $this->generate_poster($atts['provider'], $atts['url']);
+
 		ob_start();
-		$dimentions = '';
-	
-		if ($button_text_color) { ?>
-			<style>
-				.lazy-iframe-overlay .lazy-iframe-button {
-					color: <?php echo $button_text_color; ?>
-				}
-			</style>
-		<?php }
-	
-		if ($button_bg_color) { ?>
-			<style>
-				.lazy-iframe-overlay .lazy-iframe-button {
-					background: <?php echo $button_bg_color; ?>
-				}
-			</style>
-		<?php }
-	
-		if (!empty($provider_width) && !empty($provider_height)) {
-			$dimentions = "width=" . $provider_width . " height=" . $provider_height; ?>
-			<style>
-				.lazy-video-container {
-					width: <?php echo $provider_width; ?>;
-					height: <?php echo $provider_height; ?>;
-				}
-			</style>
-		<?php } else if (!empty($provider_width)) {
-			$dimentions = "width=" . $provider_width; ?>
-			<style>
-				.lazy-video-container {
-					width: <?php echo $provider_width; ?>;
-				}
-			</style>
-		<?php } else if (!empty($provider_height)) {
-			$dimentions = "height=" . $provider_height; ?>
-			<style>
-				.lazy-video-container {
-					height: <?php echo $provider_height; ?>;
-				}
-			</style>
-		<?php } ?>
-	
-		<?php if ($type == "video") : ?>
-			<div class="lazy-video-container 
-				<?php if ($provider == "gif") {
-					echo "video-grid-layout";
-				} ?>"
-				data-mode="<?php echo $mode; ?>"
-				data-provider="<?php echo $provider; ?>"
-				data-url="<?php echo $url; ?>"
-				<?php if ($provider == "gif") : ?>
-				data-title="<?php echo $pagetitle; ?>"
-				<?php endif; ?>>
-	
-				<div class="lazy-video-box">
-					<div class="lazy-video-wrapper" style="padding-top:56.2963%"></div>
-				</div>
-	
-				<div class="lazy-overlay 
-					<?php if ($provider == "gif") {
-						echo "gif-image";
-					} ?>">
-	
-					<img class="lazy-overlay-image"
-						alt="<?php echo $pagetitle; ?>"
-						src="<?php echo $poster; ?>"
-						<?php echo $dimentions; ?>
-						<?php echo ($loading == "true") ? 'loading="lazy"' : ''; ?> />
-	
-					<div class="lazy-overlay-hover 
-						<?php if ($play_icon == "hide") {
-							echo "icon-hide";
-						} ?>
-						<?php if ($play_icon == "hover") {
-							echo "icon-hover";
-						} ?>">
-					</div>
-	
-					<div class="lazy-play-icon 
-						<?php if ($play_icon == "hide") {
-							echo "icon-hide";
-						} ?>
-						<?php if ($play_icon == "hover") {
-							echo "icon-hover";
-						} ?>">
-					</div>
-	
-				</div>
-			</div>
-		<?php elseif ($type == "iframe") : ?>
-			<div class="lazy-iframe-container" data-url="<?php echo $url; ?>">
-				<div class="lazy-iframe-box">
-					<div class="lazy-iframe-wrapper" style="padding-top:56.2963%"></div>
-				</div>
-				<div class="lazy-iframe-overlay">
-					<img class="lazy-iframe-overlay-image"
-						src="<?php echo $poster; ?>"
-						width="100%"
-						<?php echo ($loading == "true") ? 'loading="lazy"' : ''; ?> />
-	
-					<?php if ($button == "show") : ?>
-						<div class="lazy-iframe-button"
-						style="color: <?php echo $button_text_color; ?>;background-color: <?php echo $button_bg_color; ?>;">
-						<?php echo $button_label; ?></div>
-					<?php endif; ?>
-				</div>
-			</div>
-		<?php endif; ?>
-		
-		<?php
-		$output = ob_get_clean();
-		return $output;
+		$dimensions = $this->generate_dimensions_styles($atts['provider_width'], $atts['provider_height']);
 
+		if ($atts['type'] === 'video') {
+			echo $this->render_lazy_video_container(
+				$atts,
+				$poster,
+				$page_title,
+				$dimensions
+			);
+		} elseif ($atts['type'] === 'iframe') {
+			echo $this->render_lazy_iframe_container(
+				$atts,
+				$poster
+			);
+		}
+
+		return ob_get_clean();
+	}
+	private function generate_poster($provider, $url)
+	{
+		switch ($provider) {
+			case 'youtube':
+				$video_code = explode('=', $url)[1];
+				return "https://i.ytimg.com/vi/{$video_code}/maxresdefault.jpg";
+
+			case 'wistia':
+				$response = wp_remote_get("https://fast.wistia.net/oembed?url={$url}&embedType=async");
+				$response_body = json_decode(wp_remote_retrieve_body($response), true);
+				return $response_body['thumbnail_url'] ?? '';
+
+			case 'vimeo':
+				$video_code = explode('/', $url)[3];
+				return "https://vumbnail.com/{$video_code}.jpg";
+
+			default:
+				return '';
+		}
+	}
+
+	private function generate_dimensions_styles($width, $height)
+	{
+		$styles = '';
+
+		if ($width) {
+			$styles .= "width: {$width}px;";
+		}
+
+		if ($height) {
+			$styles .= "height: {$height}px;";
+		}
+
+		return $styles ? "<style>.wp-lazy-video-container {{$styles}}</style>" : '';
+	}
+	private function render_lazy_video_container($atts, $poster, $title, $dimensions)
+	{
+		return "
+		{$dimensions}
+		<div class='wp-lazy-video-container " . ($atts['provider'] === 'gif' ? 'video-grid-layout' : '') . "' 
+			data-mode='{$atts['mode']}' 
+			data-provider='{$atts['provider']}' 
+			data-url='{$atts['url']}' 
+			data-title='{$title}'>
+
+			<div class='wp-lazy-video-box'>
+				<div class='wp-lazy-video-wrapper' style='padding-top:56.2963%'></div>
+			</div>
+
+			<div class='wp-lazy-overlay " . ($atts['provider'] === 'gif' ? 'gif-image' : '') . "'>
+				<img class='wp-lazy-overlay-image' 
+					width='100%'
+					alt='{$title}' 
+					src='{$poster}' 
+					" . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
+
+				<div class='wp-lazy-overlay-hover " .
+			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
+				<div class='wp-lazy-play-icon " .
+			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
+			</div>
+
+		</div>";
+	}
+
+	private function render_lazy_iframe_container($atts, $poster)
+	{
+		$button_html = $atts['button'] === 'show' ? "
+		<div class='wp-lazy-iframe-button' 
+			style='color: {$atts['button_text_color']}; background-color: {$atts['button_bg_color']};'>
+			{$atts['button_label']}
+		</div>" : '';
+
+		return "
+		<div class='wp-lazy-iframe-container' data-url='{$atts['url']}'>
+			<div class='wp-lazy-iframe-box'>
+				<div class='wp-lazy-iframe-wrapper' style='padding-top:56.2963%'></div>
+			</div>
+			<div class='wp-lazy-iframe-overlay'>
+				<img class='wp-lazy-iframe-overlay-image'
+					src='{$poster}'
+					alt='iframe preview'
+					" . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
+				{$button_html}
+			</div>
+		</div>";
 	}
 }

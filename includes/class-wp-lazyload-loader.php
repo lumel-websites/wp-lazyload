@@ -6,8 +6,8 @@
  * @link       https://https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/includes
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/includes
  */
 
 /**
@@ -17,8 +17,8 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Wp_Lazyload
- * @subpackage Wp_Lazyload/includes
+ * @package    WP_Lazyload
+ * @subpackage WP_Lazyload/includes
  * @author     K Gopal Krishna <kg@lumel.com>
  */
 class Wp_Lazyload_Loader {
