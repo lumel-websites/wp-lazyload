@@ -32,6 +32,72 @@ Key Features:
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 ---
+### How to Use the Lazy Video Embed Plugin  
+
+This plugin provides an easy way to embed videos and iframes with lazy loading. Below are usage examples to copy and modify based on your requirements. Replace placeholders (`URL`, `POSTER`, etc.) with your data.
+
+---
+
+### Basic YouTube Embed  
+Embed a YouTube video with a poster image.  
+```markdown
+[wp_lazyload url="URL_TO_YOUTUBE_VIDEO" poster="URL_TO_POSTER_IMAGE"]
+```
+
+Example:  
+```markdown
+[wp_lazyload url="https://www.youtube.com/watch?v=XXXXXXXX" poster="https://example.com/path-to-image.png"]
+```
+
+---
+
+### Wistia Video Embed  
+Embed a video from Wistia with a poster image.  
+```markdown
+[wp_lazyload type="video" url="URL_TO_WISTIA_VIDEO" poster="URL_TO_POSTER_IMAGE"]
+```
+
+Example:  
+```markdown
+[wp_lazyload type="video" url="https://wistia.com/medias/YYYYYYYY" poster="https://example.com/path-to-image.png"]
+```
+
+---
+
+### Power BI Iframe Embed  
+Lazy load a Power BI iframe with a poster image.  
+```markdown
+[wp_lazyload type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE"]
+```
+
+Example:  
+```markdown
+[wp_lazyload type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/path-to-image.png"]
+```
+
+---
+
+### Popup Mode with Customization  
+Embed a lazy-loaded iframe that opens in a popup with a button and custom styles.  
+```markdown
+[wp_lazyload mode="popup" provider="PROVIDER_NAME" type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE" play_icon="show" button="show" button_label="BUTTON_TEXT" button_text_color="#COLOR_CODE" button_bg_color="#COLOR_CODE"]
+```
+
+Example:  
+```markdown
+[wp_lazyload mode="popup" provider="youtube" type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/path-to-image.png" play_icon="show" button="show" button_label="Watch Now" button_text_color="#ffffff" button_bg_color="#0073e6"]
+```
+
+---
+
+### Notes  
+- **`url`**: The source URL of the video or iframe.  
+- **`poster`**: URL for the placeholder image shown before the video loads.  
+- **`mode`**: Set to `popup` for opening the video/iframe in a popup.  
+- **`button`**: Set to `show` to enable a button overlay.  
+- **`button_label`**: Text displayed on the button (e.g., "Watch Now").  
+- **`button_text_color`**: Customizes the button's text color.  
+- **`button_bg_color`**: Customizes the button's background color.  
 
 ### Changelog
 
