@@ -54,23 +54,6 @@
 			$('.wp-lazy-videos-popup-overlay').remove();
 		});
 	};
-	const openIframePopup = (embedCode) => {
-		console.log("kkkkkkkkkkkkk");
-		
-		const popupHTML = `
-            <div class="wp-lazy-iframe-popup-overlay">
-                <div class="wp-lazy-iframe-popup">
-                    ${embedCode}
-                    <button class="wp-lazy-iframe-popup-close">
-                        <img alt="Click to close video" style="height: 34px;" src="data:image/gif;base64,R0lGODlhRABEAIABAP///////yH5BAEAAAEALAAAAABEAEQAAAKVjI+py+0Po5y02oszBPxyoGFfR41gWJlnpKJWu5muJzvw/NbLjefjruvRfgiecPg5GI/IzpLZfEKjyelMtbKisFoXltQVfcHhkkxaZtzQ6WIwwG4/42E03Rq/M+/6Xr9/RTTxVkc2aNiWqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGyvbUwAAOw==">
-                    </button>
-                </div>
-            </div>`;
-
-		$('body').append(popupHTML).on('click', '.wp-lazy-iframe-popup-overlay, .wp-lazy-iframe-popup-close', function () {
-			$('.wp-lazy-iframe-popup-overlay').remove();
-		});
-	};
 
 
 	$(document).ready(function () {
@@ -102,7 +85,7 @@
 				const mode = parent.data('mode');
 				if (mode === "inline") {
 					parent.find('.wp-lazy-iframe-wrapper').html(embedCode);
-					$(this).hide();
+					parent.find('.wp-lazy-overlay').hide();
 				} else if (mode === "popup") {
 					openPopup(embedCode);
 				}
