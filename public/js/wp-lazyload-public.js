@@ -102,7 +102,7 @@
 				const mode = parent.data('mode');
 				if (mode === "inline") {
 					parent.find('.wp-lazy-iframe-wrapper').html(embedCode);
-					parent.find('.wp-lazy-overlay').hide();
+					$(this).hide();
 				} else if (mode === "popup") {
 					openPopup(embedCode);
 				}
