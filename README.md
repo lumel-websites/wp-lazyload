@@ -1,84 +1,40 @@
+# Lazy Videos
+* **Contributors:** kgkrishnalmt, puneetlumel
+* **Tags:** videos, lazy-loading, youtube, vimeo, wistia
+* **Requires at least:** 5.8.1
+* **Tested up to:** 5.8.1
+* **Stable tag:** 1.0.0
+* **License:** GPLv2 or later
+* **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-## **Summary of the WP Lazy Load Plugin**
-
-  
-
-### **WordPress Plugin (PHP)**
-
-#### **Class: `Wp_Lazyload_Public`**
-
-1.  **Purpose**: Implements a shortcode `[wp_lazyload]` for embedding lazy-loaded videos.
-
-2.  **Key Methods**:
-
--  **`enqueue_styles` & `enqueue_scripts`**: Load CSS and JS for lazy-loading functionality.
-
--  **`add_wp_lazyload_shortcode`**: Adds `[wp_lazyload]` shortcode.
-
--  **`wp_lazy_loading_shortcode_callback($atts)`**:
-
-- Processes shortcode attributes like `url`, `provider`, `poster`, `play_icon`, etc.
-
-- Generates video thumbnails (YouTube, Vimeo, Wistia).
-
-- Outputs HTML for video containers in lazy-loading mode (`inline`/`popup`).
-
-  
-
-3.  **Error Handling**:
-
-- Validates essential attributes like `url` and `poster`.
-
-- Displays helpful error messages when missing.
-
-  
+This is a WordPress plugin that can lazy load single videos and increases your Google PageSpeed Score 
 
 ---
 
-  
+### Description
 
-### **Frontend Functionality (JavaScript)**
+This plugin lazy loads videos on your page by using a placeholder preview image in place of the video. The video loads only when the preview image is clicked. All the scripts and styles for the video are loaded only when the placeholder image is clicked thus improving your site performance as well as increasing your Google PageSpeed/GTMetrix Score.
 
-1.  **Lazy Loading**:
+Lazy videos currently supports loading videos from YouTube, Vimeo and Wistia. Support for more providers will be added in the future.
 
-- Videos load only when users interact with the overlay or play button.
-
-2.  **Dynamic Embedding**:
-
-- Supports inline playback or modal (popup) video displays.
-
-3.  **Automatic Thumbnails**:
-
-- Generates thumbnails dynamically based on the video platform (e.g., YouTube, Vimeo).
-
-  
+Key Features:
+* Override default placeholder image.
+* Customize play icon color
 
 ---
 
-  
+### Installation
 
-### **Outcomes and Benefits**
-
-1.  **Performance**: Optimized page load times by loading videos on demand.
-
-2.  **Customization**: Offers flexible playback modes (`inline`/`popup`) with attributes for configuration.
-
-3.  **Provider Support**: Compatible with YouTube, Vimeo, Wistia, and GIFs while maintaining responsive design.
-
-  
+1. Upload `lazy-videos-1.0.0.zip` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
 
 ---
 
-  
+### Changelog
 
-### **Potential Enhancements**
+**1.0.0**
+* Initial Release. 
+* **Feat:** Load YouTube, Vimeo and Wistia videos via the `[wp_lazyload]` shortcode
+* **Feat:** Override default placeholder image
+* **Feat:** Customize play icon color
 
-1. Replace **jQuery** with native JavaScript for modern compatibility.
-
-2. Improve validation and sanitization of shortcode inputs.
-
-3. Handle dynamic thumbnail generation for better API resilience.
-
-  
-
-Would you like to adjust any features or integrate additional video providers?
