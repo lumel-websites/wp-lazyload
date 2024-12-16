@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://https://github.com/kgkrishnalmt
+ * @link       https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
  * @package    WP_Lazyload

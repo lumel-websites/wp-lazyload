@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       https://https://github.com/kgkrishnalmt
+ * @link       https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
  * @package    WP_Lazyload
@@ -149,6 +149,10 @@ class Wp_Lazyload_Public
 			return '<p style="color:red;">[poster] - Poster image is a required parameter</p>';
 		}
 
+		if ($atts['type'] === 'iframe' && empty($atts['poster'])) {
+			return '<p style="color:red;">[poster] - Poster image is a required parameter for iframe type</p>';
+		}
+
 		$poster = $atts['poster'] ?: $this->generate_poster($atts['provider'], $atts['url']);
 
 		ob_start();
@@ -174,7 +178,19 @@ class Wp_Lazyload_Public
 	{
 		switch ($provider) {
 			case 'youtube':
-				$video_code = explode('=', $url)[1];
+				// Parse the video code correctly from the URL
+				$parsed_url = parse_url($url);
+
+				// Handle short URLs like "https://youtu.be/{video_code}"
+				if (isset($parsed_url['host']) && $parsed_url['host'] === 'youtu.be') {
+					// The path contains the video code
+					$video_code = ltrim($parsed_url['path'], '/');
+				} else {
+					// Long YouTube URL, parse the query string "https://youtube.com/{video_code}"
+					parse_str($parsed_url['query'] ?? '', $query_params);
+					$video_code = $query_params['v'] ?? '';
+				}
+
 				return "https://i.ytimg.com/vi/{$video_code}/maxresdefault.jpg";
 
 			case 'wistia':
@@ -244,7 +260,7 @@ class Wp_Lazyload_Public
 		</div>" : '';
 
 		return "
-		<div class='wp-lazy-iframe-container' data-url='{$atts['url']}'>
+		<div class='wp-lazy-iframe-container' data-url='{$atts['url']}'	data-mode='{$atts['mode']}' >
 			<div class='wp-lazy-iframe-box'>
 				<div class='wp-lazy-iframe-wrapper' style='padding-top:56.2963%'></div>
 			</div>

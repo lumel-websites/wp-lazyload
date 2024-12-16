@@ -265,3 +265,66 @@
     border-radius: 3px;
 }
 
+.wp-lazy-iframe-popup-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(83, 84, 84, 0.3);
+    top: 0;
+    z-index: 999;
+}
+
+.wp-lazy-iframe-popup {
+    position: relative;
+    width: 60%;
+    max-width: 1080px;
+    height: calc(50% - 0px);
+    margin: 0px auto;
+    z-index: 9999;
+    top: 20%;
+}
+
+.wp-lazy-iframe-popup-close {
+    position: absolute;
+    background: none;
+    border: unset;
+    cursor: pointer;
+}
+
+.wp-lazy-iframe-popup iframe {
+    width: 100%;
+    height: 608px;
+}
+
+/* Media queries for different screen sizes */
+@media only screen and (max-width: 1440px) {
+    .wp-lazy-iframe-popup iframe {
+        height: 486px;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .wp-lazy-iframe-popup iframe {
+        height: 432px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .wp-lazy-iframe-popup {
+        width: 90%;
+    }
+
+    .wp-lazy-iframe-popup iframe {
+        height: 390px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .wp-lazy-iframe-popup {
+        width: 90%;
+    }
+
+    .wp-lazy-iframe-popup iframe {
+        height: 190px;
+    }
+}

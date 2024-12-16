@@ -8,18 +8,18 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://https://github.com/kgkrishnalmt
+ * @link              https://github.com/kgkrishnalmt
  * @since             1.0.0
  * @package           Wp_Lazyload
  *
  * @wordpress-plugin
  * Plugin Name:       WP Lazyload
- * Plugin URI:        https://https://github.com/lumel-websites/wp-lazyload
+ * Plugin URI:        https://github.com/lumel-websites/wp-lazyload
  * Description:       This plugin wp lazy loads content on your page, such as videos, images, and iframes, by using a placeholder preview in place of the actual content. The full content is loaded only when the placeholder is interacted with (e.g., clicked), significantly improving your site’s performance and enhancing your Google PageSpeed and GTMetrix scores. This approach optimizes loading time and resource usage, making it a versatile solution for lazy-loading any type of embedded media.
 
  * Version:           1.0.0
  * Author:            K Gopal Krishna
- * Author URI:        https://https://github.com/kgkrishnalmt/
+ * Author URI:        https://github.com/kgkrishnalmt/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wp-lazyload

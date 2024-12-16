@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://https://github.com/kgkrishnalmt
+ * @link       https://github.com/kgkrishnalmt
  * @since      1.0.0
  *
  * @package    WP_Lazyload
