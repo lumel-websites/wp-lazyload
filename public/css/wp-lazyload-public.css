@@ -265,3 +265,6 @@
     border-radius: 3px;
 }
 
+.html5-image-img{
+    object-fit: cover;
+}

@@ -1,110 +1,128 @@
 # WP Lazyload
 
-* **Contributors:** kgkrishnalmt, puneetlumel
-* **Tags:** videos, lazy-loading, youtube, vimeo, wistia, iframe, button customization
-* **Requires at least:** 5.8.1
-* **Tested up to:** 5.8.1
-* **Stable tag:** 1.0.0
-* **License:** GPLv2 or later
-* **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+* **Contributors:** kgkrishnalmt, puneetlumel  
+* **Tags:** videos, lazy-loading, youtube, vimeo, wistia, gif, iframe, button customization, shortcode generator  
+* **Requires at least:** 5.8.1  
+* **Tested up to:** 5.8.1  
+* **Stable tag:** 1.0.0  
+* **License:** GPLv2 or later  
+* **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-This is a WordPress plugin that can lazy load single videos, iframes, and increase your Google PageSpeed Score.
+This is a WordPress plugin that can lazy load videos, GIFs, and iframes to increase your Google PageSpeed score.
 
 ---
 
 ### Description
 
-This plugin lazy loads videos and iframes on your page by using a placeholder preview image in place of the content. The video or iframe loads only when the preview image is clicked. All the scripts and styles for the content are loaded only when the placeholder image is clicked, thus improving your site performance as well as increasing your Google PageSpeed/GTMetrix Score.
+This plugin lazy loads videos, GIFs, and iframes using a placeholder image. The content loads **only when the placeholder is clicked**, improving your site's performance and boosting PageSpeed and GTMetrix scores.
 
-WP Lazyload currently supports loading videos from YouTube, Vimeo, and Wistia. Support for more providers will be added in the future.
+**WP Lazyload** supports:
+- YouTube, Vimeo, Wistia videos  
+- GIFs  
+- Custom iframes  
 
-Key Features:
-* Lazy load YouTube, Vimeo, Wistia videos, and iframes.
-* Override default placeholder image.
-* Customize play icon color.
-* Button customization for iframe overlays, including label, text color, and background color.
+**Admin Feature**:  
+- An intuitive **Shortcode Generator** in the admin dashboard makes it easy to generate shortcodes without manual coding.  
+
+---
+
+### Key Features:
+* Lazy load YouTube, Vimeo, Wistia videos, GIFs, and iframes.  
+* User-friendly shortcode generator tool in the admin panel.  
+* Override default placeholder images.  
+* Play icon modes: `show`, `hide`, or `hover`.  
+* Customizable button overlays with label, color, and styles.  
+* Popup or inline display modes.
 
 ---
 
 ### Installation
 
-1. Upload `lazy-videos-1.0.0.zip` to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-
----
-### How to Use the Lazy Video Embed Plugin  
-
-This plugin provides an easy way to embed videos and iframes with lazy loading. Below are usage examples to copy and modify based on your requirements. Replace placeholders (`URL`, `POSTER`, etc.) with your data.
+1. Upload `lazy-videos-1.0.0.zip` to the `/wp-content/plugins/` directory.  
+2. Activate the plugin via the 'Plugins' menu in WordPress.  
 
 ---
 
-### Basic YouTube Embed  
-Embed a YouTube video with a poster image.  
+### Shortcode Examples  
+
+Below are usage examples. Replace placeholders (`URL`, `POSTER`, etc.) with your data.
+
+---
+
+#### 1. YouTube Video Embed  
+Embed a YouTube video with a placeholder:  
 ```markdown
 [wp_lazyload url="URL_TO_YOUTUBE_VIDEO" poster="URL_TO_POSTER_IMAGE"]
 ```
 
 Example:  
 ```markdown
-[wp_lazyload url="https://www.youtube.com/watch?v=XXXXXXXX" poster="https://example.com/path-to-image.png"]
+[wp_lazyload url="https://www.youtube.com/watch?v=XXXXXXXX" poster="https://example.com/image.jpg"]
 ```
 
 ---
 
-### Wistia Video Embed  
-Embed a video from Wistia with a poster image.  
+#### 2. Lazy Load GIF  
+Embed a GIF with lazy loading:  
 ```markdown
-[wp_lazyload type="video" url="URL_TO_WISTIA_VIDEO" poster="URL_TO_POSTER_IMAGE"]
+[wp_lazyload type="gif" url="URL_TO_GIF" poster="URL_TO_POSTER_IMAGE"]
 ```
 
 Example:  
 ```markdown
-[wp_lazyload type="video" url="https://wistia.com/medias/YYYYYYYY" poster="https://example.com/path-to-image.png"]
+[wp_lazyload type="gif" url="https://example.com/image.gif" poster="https://example.com/poster.jpg"]
 ```
 
 ---
 
-### Power BI Iframe Embed  
-Lazy load a Power BI iframe with a poster image.  
+#### 3. Custom Iframe Embed  
+Embed a lazy-loaded iframe:  
 ```markdown
 [wp_lazyload type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE"]
 ```
 
 Example:  
 ```markdown
-[wp_lazyload type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/path-to-image.png"]
+[wp_lazyload type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/poster.jpg"]
 ```
 
 ---
 
-### Popup Mode with Customization  
-Embed a lazy-loaded iframe that opens in a popup with a button and custom styles.  
+#### 4. Popup Display Mode with Button  
+Embed an iframe using a popup button:  
 ```markdown
-[wp_lazyload mode="popup" provider="PROVIDER_NAME" type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE" play_icon="show" button="show" button_label="BUTTON_TEXT" button_text_color="#COLOR_CODE" button_bg_color="#COLOR_CODE"]
+[wp_lazyload mode="popup" provider="youtube" type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE" play_icon="hover" button="show" button_label="Watch Now" button_text_color="#ffffff" button_bg_color="#0073e6"]
 ```
 
-Example:  
-```markdown
-[wp_lazyload mode="popup" provider="youtube" type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/path-to-image.png" play_icon="show" button="show" button_label="Watch Now" button_text_color="#ffffff" button_bg_color="#0073e6"]
-```
+---
+
+### Admin Shortcode Generator  
+Quickly generate shortcodes with the built-in Shortcode Generator located in the WordPress admin. This tool allows you to:
+- Select content type: Video, Iframe, or GIF.  
+- Choose providers: YouTube, Vimeo, Wistia, or Custom.  
+- Set placeholder images, play icon styles, button customization, and more.  
+
+The generated shortcode can be copied and used on any page or post.
 
 ---
 
 ### Notes  
-- **`url`**: The source URL of the video or iframe.  
-- **`poster`**: URL for the placeholder image shown before the video loads.  
-- **`mode`**: Set to `popup` for opening the video/iframe in a popup.  
-- **`button`**: Set to `show` to enable a button overlay.  
-- **`button_label`**: Text displayed on the button (e.g., "Watch Now").  
-- **`button_text_color`**: Customizes the button's text color.  
-- **`button_bg_color`**: Customizes the button's background color.  
+- **`type`**: Define content type (video, iframe, or gif).  
+- **`poster`**: Placeholder image for lazy loading.  
+- **`mode`**: Set `popup` for modal display.  
+- **`button`**: Show or hide buttons (`show`/`hide`).  
+- **`play_icon`**: Modes available: `show`, `hide`, or `hover`.
 
-### Changelog
+---
 
-**1.0.0**
-* Initial Release.
-* **Feat:** Lazy load YouTube, Vimeo, Wistia videos, and iframes via the `[wp_lazyload]` shortcode.
-* **Feat:** Override default placeholder image.
-* **Feat:** Customize play icon color.
-* **Feat:** Button customization for iframes.
+### Changelog  
+
+**1.0.0**  
+* Initial Release.  
+* **Feat:** Lazy load YouTube, Vimeo, Wistia videos, GIFs, and iframes.  
+* **Feat:** New Shortcode Generator added to WordPress admin.  
+* **Feat:** Override default placeholder image.  
+* **Feat:** Play icon customization: show, hide, or hover.  
+* **Feat:** Button customization with custom text and styles.
+
 

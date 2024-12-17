@@ -29,10 +29,6 @@
 
 			case "vimeo":
 				return `<iframe loading="lazy" src="https://player.vimeo.com/video/${videoCode}?autoplay=1&volume=1" allowtransparency="true" allow="autoplay" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen></iframe>`;
-
-			case "gif":
-				return `<img class="html5-image-img" alt="${title}" src="${url}" width="100%" height="auto">`;
-
 			default:
 				return '';
 		}
