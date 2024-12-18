@@ -158,6 +158,7 @@ class Wp_Lazyload_Public
 		if ($atts['type'] === 'gif') {
 			echo $this->render_lazy_gif_container(
 				$atts,
+				$poster,
 				$page_title,
 				$dimensions
 			);
@@ -254,31 +255,6 @@ class Wp_Lazyload_Public
 			</div>";
 	}
 
-
-	private function render_lazy_gif_container($atts, $title, $dimensions)
-	{
-		return "
-			<div class='wp-lazy-video-container video-grid-layout' 
-				data-url='{$atts['url']}' 
-				data-title='{$title}'
-				>
-	
-				<div class='wp-lazy-video-box'>
-					<div class='wp-lazy-video-wrapper' >
-						<img class='html5-image-img '
-							{$dimensions}  
-							alt='{$title}' 
-							src='{$atts['url']}' 
-							loading='lazy'
-							width='100%' 
-							height='auto'>
-					</div>
-				</div>
-			</div>";
-	}
-
-
-
 	private function render_lazy_iframe_container($atts, $poster)
 	{
 		$button_html = $atts['button'] === 'show' ? "
@@ -300,5 +276,20 @@ class Wp_Lazyload_Public
 				{$button_html}
 			</div>
 		</div>";
+	}
+
+	private function render_lazy_gif_container($atts, $poster, $title, $dimensions)
+	{
+		return "
+        <div class='wp-lazy-gif-container' data-url='{$atts['url']}' data-mode='{$atts['mode']}' data-title='{$title}' {$dimensions}>
+            <div class='wp-lazy-gif-box'>
+                <div class='wp-lazy-gif-wrapper'>
+                    <img class='wp-lazy-gif-poster' src='{$poster}' alt='{$title}' loading='lazy'>
+                </div>
+            </div>
+            <div class='wp-lazy-gif-overlay'>
+                <span class='gif-label'>GIF</span>
+            </div>
+        </div>";
 	}
 }

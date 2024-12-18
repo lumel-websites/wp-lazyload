@@ -341,9 +341,18 @@ class Wp_Lazyload_Admin
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Poster Image URL</th>
+                    <th scope="row">Poster Image</th>
                     <td>
-                        <input type="text" id="shortcode-poster" class="regular-text" placeholder="Enter poster image URL (optional for video)">
+                        <div id="poster-image-container">
+                            <input type="text" id="shortcode-poster-url" class="regular-text" placeholder="Enter poster image URL (optional)" />
+                            <span style="margin: 10px;">or</span>
+                            <input type="hidden" id="shortcode-poster" name="shortcode-poster" value="" />
+                            <button type="button" id="upload-poster-button" class="button">Upload Image</button>
+                            <button type="button" id="remove-poster-button" class="button" style="display:none;">Remove Image</button>
+                            <div id="poster-preview" style="margin-top: 10px; display: none;">
+                                <img id="poster-preview-img" src="" alt="Poster Image" style="max-width: 300px; max-height: 200px;" />
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>

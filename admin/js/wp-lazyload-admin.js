@@ -1,21 +1,52 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	// Debug log function for consistency
-	function debugLog(message, data = null) {
-		console.log(`[DEBUG]: ${message}`, data);
-	}
+
+	const posterInput = $('#shortcode-poster');
+	const uploadButton = $('#upload-poster-button');
+	const removeButton = $('#remove-poster-button');
+	const posterPreview = $('#poster-preview');
+	const previewImg = $('#poster-preview-img');
+
+	const mediaUploader = wp.media({
+		title: 'Select or Upload a Poster Image',
+		button: {
+			text: 'Use This Image'
+		},
+		multiple: false
+	});
+
+	uploadButton.on('click', function (e) {
+		e.preventDefault();
+		mediaUploader.open();
+	});
+
+	mediaUploader.on('select', function () {
+		const attachment = mediaUploader.state().get('selection').first().toJSON();
+		posterInput.val(attachment.url);
+		previewImg.attr('src', attachment.url);
+		posterPreview.show();
+		removeButton.show();
+		updateShortcode(); // Update shortcode when the image is selected
+	});
+
+	removeButton.on('click', function (e) {
+		e.preventDefault();
+		posterInput.val('');
+		previewImg.attr('src', '');
+		posterPreview.hide();
+		$(this).hide();
+		updateShortcode(); // Update shortcode when the image is removed
+	});
 
 	function updateShortcode() {
-		debugLog('updateShortcode function triggered');
 
 		var attrs = [];
 		var url = $('#shortcode-url').val();
 		var type = $('#shortcode-type').val();
 		var provider = $('#shortcode-provider').val();
-		var poster = $('#shortcode-poster').val();
-
-		debugLog('Initial Values', { url, type, provider, poster });
+		var poster = $('#shortcode-poster').val() || $('#shortcode-poster-url').val();
 
 		attrs.push(`url="${url}"`);
 		attrs.push(`type="${type}"`);
@@ -73,26 +104,21 @@
 			attrs.push(`button_bg_color="${buttonBgColor}"`);
 		}
 
-		debugLog('Generated Attributes', attrs);
-
 		var shortcode = `[wp_lazyload ${attrs.join(' ')}]`;
 		$('#generated-shortcode').text(shortcode);
-		debugLog('Final Shortcode', shortcode);
 	}
 
 	// Update shortcode on any input change
 	$('#shortcode-url, #shortcode-type, #shortcode-provider, #shortcode-poster, ' +
-	  '#shortcode-mode, #shortcode-poster-lazy, #shortcode-play-icon, ' +
-	  '#shortcode-width, #shortcode-height, #shortcode-button, ' +
-	  '#shortcode-button-label, #shortcode-button-text-color, #shortcode-button-bg-color')
-	.on('input change', function(event) {
-		debugLog(`Input/Change event detected on`, event.target.id);
-		updateShortcode();
-	});
+		'#shortcode-mode, #shortcode-poster-lazy, #shortcode-play-icon, #shortcode-poster-url,' +
+		'#shortcode-width, #shortcode-height, #shortcode-button, ' +
+		'#shortcode-button-label, #shortcode-button-text-color, #shortcode-button-bg-color')
+		.on('input change', function (event) {
+			updateShortcode();
+		});
 
 	// Copy shortcode to clipboard
-	$('#copy-shortcode').click(function() {
-		debugLog('Copy shortcode button clicked');
+	$('#copy-shortcode').click(function () {
 		var $temp = $("<textarea>");
 		$("body").append($temp);
 		$temp.val($('#generated-shortcode').text()).select();
@@ -102,7 +128,6 @@
 	});
 
 	// Initial shortcode generation
-	debugLog('Script initialized, generating initial shortcode');
 	updateShortcode();
 
-})( jQuery );
+})(jQuery);

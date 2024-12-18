@@ -86,6 +86,18 @@
 				}
 			}
 		});
+
+		$('.wp-lazy-gif-overlay').click(function () {
+			const parent = $(this).closest('.wp-lazy-gif-container');
+			const url = parent.data('url');
+			const gifHTML = `<img class="wp-lazy-gif" src="${url}" alt="GIF" loading="lazy">`;
+		
+			// Replace wrapper content with the GIF and hide overlay
+			parent.find('.wp-lazy-gif-wrapper').html(gifHTML);
+			parent.find('.wp-lazy-gif-overlay').hide();
+		});
+		
+		
 	});
 
 })(jQuery);

@@ -268,3 +268,85 @@
 .html5-image-img{
     object-fit: cover;
 }
+/* Main container for GIFs */
+.wp-lazy-gif-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GIF wrapper div for layout consistency */
+.wp-lazy-gif-box {
+    position: relative;
+    width: 100%;
+    padding-top: 56.2963%; /* Aspect ratio */
+    background-color: #000;
+}
+
+/* Poster placeholder for GIF before clicking */
+.wp-lazy-gif-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Overlay style for GIF with 'GIF' label */
+.wp-lazy-gif-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 10px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.wp-lazy-gif-overlay .gif-label {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* GIF loaded after the user clicks */
+.wp-lazy-gif {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Fade-in animation for a smooth reveal */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
