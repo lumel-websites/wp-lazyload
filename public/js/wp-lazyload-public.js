@@ -71,9 +71,8 @@
 			}
 		});
 
-		$('.wp-lazy-iframe-overlay').click(function () {
-			const parent = $(this).parent();
-
+		$('.wp-lazy-iframe-overlay, .wp-lazy-iframe-button').click(function () {
+			const parent = $(this).closest('[data-mode]');
 			const url = parent.data('url');
 
 			if (url) {
@@ -81,7 +80,7 @@
 				const mode = parent.data('mode');
 				if (mode === "inline") {
 					parent.find('.wp-lazy-iframe-wrapper').html(embedCode);
-					parent.find('.wp-lazy-overlay').hide();
+					parent.find('.wp-lazy-iframe-overlay').hide();
 				} else if (mode === "popup") {
 					openPopup(embedCode);
 				}
