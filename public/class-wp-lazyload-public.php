@@ -20,7 +20,7 @@
  * @subpackage WP_Lazyload/public
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload_Public
+class WP_Lazyload_Public
 {
 
 	/**
@@ -67,10 +67,10 @@ class Wp_Lazyload_Public
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Wp_Lazyload_Loader as all of the hooks are defined
+		 * defined in WP_Lazyload_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Wp_Lazyload_Loader will then create the relationship
+		 * The WP_Lazyload_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -90,10 +90,10 @@ class Wp_Lazyload_Public
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Wp_Lazyload_Loader as all of the hooks are defined
+		 * defined in WP_Lazyload_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Wp_Lazyload_Loader will then create the relationship
+		 * The WP_Lazyload_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -118,7 +118,6 @@ class Wp_Lazyload_Public
 	 */
 	public function wp_lazy_loading_shortcode_callback($atts)
 	{
-
 		$defaults = [
 			'mode' => get_option('mode', 'inline'),
 			'provider' => 'youtube',
@@ -135,81 +134,36 @@ class Wp_Lazyload_Public
 			'button_bg_color' => get_option('button_bg_color', '#ffcd3d'),
 		];
 
-
 		$atts = shortcode_atts($defaults, $atts, 'wp_lazyload');
-
-		$page_id = get_the_ID();
-		$page_title = get_the_title($page_id);
 
 		if (empty($atts['url'])) {
 			return '<p style="color:red;">[url] - Video URL is a required parameter</p>';
 		}
 
-
 		if ($atts['type'] === 'iframe' && empty($atts['poster'])) {
 			return '<p style="color:red;">[poster] - Poster image is a required parameter for iframe type</p>';
 		}
 
-		$poster = $atts['poster'] ?: $this->generate_poster($atts['provider'], $atts['url']);
+		if ($atts['type'] === 'video' && empty($atts['poster'])) {
+			$atts['poster'] = $this->generate_poster($atts['provider'], $atts['url']);
+		}
 
 		ob_start();
 		$dimensions = $this->generate_dimensions_styles($atts['provider_width'], $atts['provider_height']);
 
-		if ($atts['type'] === 'gif') {
-			echo $this->render_lazy_gif_container(
-				$atts,
-				$poster,
-				$page_title,
-				$dimensions
-			);
-		} elseif ($atts['type'] === 'video') {
-			echo $this->render_lazy_video_container(
-				$atts,
-				$poster,
-				$page_title,
-				$dimensions
-			);
-		} elseif ($atts['type'] === 'iframe') {
-			echo $this->render_lazy_iframe_container(
-				$atts,
-				$poster
-			);
+		switch ($atts['type']) {
+			case 'gif':
+				echo $this->render_lazy_gif_container($atts, $dimensions);
+				break;
+			case 'video':
+				echo $this->render_lazy_video_container($atts, $dimensions);
+				break;
+			case 'iframe':
+				echo $this->render_lazy_iframe_container($atts);
+				break;
 		}
 
 		return ob_get_clean();
-	}
-
-	private function generate_poster($provider, $url)
-	{
-		switch ($provider) {
-			case 'youtube':
-				// Parse the video code correctly from the URL
-				$parsed_url = parse_url($url);
-
-				// Handle short URLs like "https://youtu.be/{video_code}"
-				if (isset($parsed_url['host']) && $parsed_url['host'] === 'youtu.be') {
-					// The path contains the video code
-					$video_code = ltrim($parsed_url['path'], '/');
-				} else {
-					// Long YouTube URL, parse the query string "https://youtube.com/{video_code}"
-					parse_str($parsed_url['query'] ?? '', $query_params);
-					$video_code = $query_params['v'] ?? '';
-				}
-
-				return "https://i.ytimg.com/vi/{$video_code}/maxresdefault.jpg";
-
-			case 'wistia':
-				$response = wp_remote_get("https://fast.wistia.net/oembed?url={$url}&embedType=async");
-				$response_body = json_decode(wp_remote_retrieve_body($response), true);
-				return $response_body['thumbnail_url'] ?? '';
-
-			case 'vimeo':
-				$video_code = explode('/', $url)[3];
-				return "https://vumbnail.com/{$video_code}.jpg";
-
-			default:
-				return '';
-		}
 	}
 
 	private function generate_dimensions_styles($width, $height)
@@ -226,70 +180,100 @@ class Wp_Lazyload_Public
 
 		return $styles ? "style='{$styles}'" : '';
 	}
-	private function render_lazy_video_container($atts, $poster, $title, $dimensions)
+
+	private function generate_poster($provider, $url)
 	{
-		return "
-			<div class='wp-lazy-video-container " . ($atts['provider'] === 'gif' ? 'video-grid-layout' : '') . "' 
-				data-mode='{$atts['mode']}' 
-				data-provider='{$atts['provider']}' 
-				data-url='{$atts['url']}' 
-				data-title='{$title}'
-				{$dimensions}>
-	
-				<div class='wp-lazy-video-box'>
-					<div class='wp-lazy-video-wrapper' style='padding-top:56.2963%;'></div>
-				</div>
-	
-				<div class='wp-lazy-overlay " . ($atts['provider'] === 'gif' ? 'gif-image' : '') . "'>
-					<img class='wp-lazy-overlay-image' 
-						width='100%'
-						alt='{$title}' 
-						src='{$poster}' 
-						" . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
-	
-					<div class='wp-lazy-overlay-hover " .
-			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
-					<div class='wp-lazy-play-icon " .
-			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
-				</div>
-			</div>";
+		switch ($provider) {
+			case 'youtube':
+				$parsed_url = parse_url($url);
+				$video_code = '';
+				if (isset($parsed_url['host']) && $parsed_url['host'] === 'youtu.be') {
+					$video_code = ltrim($parsed_url['path'], '/');
+				} else {
+					parse_str($parsed_url['query'] ?? '', $query_params);
+					$video_code = $query_params['v'] ?? '';
+				}
+				return "https://i.ytimg.com/vi/{$video_code}/maxresdefault.jpg";
+
+			case 'wistia':
+				$response = wp_remote_get("https://fast.wistia.net/oembed?url={$url}&embedType=async");
+				$response_body = json_decode(wp_remote_retrieve_body($response), true);
+				return $response_body['thumbnail_url'] ?? '';
+
+			case 'vimeo':
+				$video_code = explode('/', $url)[3];
+				return "https://vumbnail.com/{$video_code}.jpg";
+
+			default:
+				return '';
+		}
 	}
 
-	private function render_lazy_iframe_container($atts, $poster)
+	private function render_lazy_video_container($atts, $dimensions)
+	{
+		return "
+            <div class='wp-lazy-video-container " . ($atts['provider'] === 'gif' ? 'video-grid-layout' : '') . "'
+                data-mode='{$atts['mode']}'
+                data-provider='{$atts['provider']}'
+                data-url='{$atts['url']}'
+                data-title='{$atts['title']}'
+                {$dimensions}>
+                <div class='wp-lazy-video-box'>
+                    <div class='wp-lazy-video-wrapper' style='padding-top:56.2963%;'></div>
+                </div>
+                <div class='wp-lazy-overlay " . ($atts['provider'] === 'gif' ? 'gif-image' : '') . "'>
+                    <img class='wp-lazy-overlay-image' 
+                        width='100%'
+                        alt='{$atts['title']}' 
+                        src='{$atts['poster']}' 
+                        " . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
+                    <div class='wp-lazy-overlay-hover " .
+			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
+                    <div class='wp-lazy-play-icon " .
+			($atts['play_icon'] === 'hide' ? 'icon-hide' : ($atts['play_icon'] === 'hover' ? 'icon-hover' : '')) . "'></div>
+                </div>
+            </div>";
+	}
+
+	private function render_lazy_iframe_container($atts)
 	{
 		$button_html = $atts['button'] === 'show' ? "
-		<div class='wp-lazy-iframe-button' 
-			style='color: {$atts['button_text_color']}; background-color: {$atts['button_bg_color']};'>
-			{$atts['button_label']}
-		</div>" : '';
+            <div class='wp-lazy-iframe-button' 
+                style='color: {$atts['button_text_color']}; background-color: {$atts['button_bg_color']};'>
+                {$atts['button_label']}
+            </div>" : '';
 
 		return "
-		<div class='wp-lazy-iframe-container' data-url='{$atts['url']}'	data-mode='{$atts['mode']}' >
-			<div class='wp-lazy-iframe-box'>
-				<div class='wp-lazy-iframe-wrapper' style='padding-top:56.2963%'></div>
-			</div>
-			<div class='wp-lazy-iframe-overlay'>
-				<img class='wp-lazy-iframe-overlay-image'
-					src='{$poster}'
-					alt='iframe preview'
-					" . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
-				{$button_html}
-			</div>
-		</div>";
+            <div class='wp-lazy-iframe-container' data-url='{$atts['url']}' data-mode='{$atts['mode']}'>
+                <div class='wp-lazy-iframe-box'>
+                    <div class='wp-lazy-iframe-wrapper' style='padding-top:56.2963%'></div>
+                </div>
+                <div class='wp-lazy-iframe-overlay'>
+                    <img class='wp-lazy-iframe-overlay-image'
+                        src='{$atts['poster']}'
+                        alt='iframe preview'
+                        " . (!empty($atts['lazy_loading']) ? 'loading="lazy"' : '') . ">
+                    {$button_html}
+                </div>
+            </div>";
 	}
 
-	private function render_lazy_gif_container($atts, $poster, $title, $dimensions)
+	private function render_lazy_gif_container($atts, $dimensions)
 	{
 		return "
-        <div class='wp-lazy-gif-container' data-url='{$atts['url']}' data-mode='{$atts['mode']}' data-title='{$title}' {$dimensions}>
-            <div class='wp-lazy-gif-box'>
-                <div class='wp-lazy-gif-wrapper'>
-                    <img class='wp-lazy-gif-poster' src='{$poster}' alt='{$title}' loading='lazy'>
+            <div class='wp-lazy-gif-container' 
+                data-url='{$atts['url']}' 
+                data-mode='{$atts['mode']}' 
+                data-title='{$atts['title']}' 
+                {$dimensions}>
+                <div class='wp-lazy-gif-box'>
+                    <div class='wp-lazy-gif-wrapper'>
+                        <img class='wp-lazy-gif-poster' src='{$atts['poster']}' alt='{$atts['title']}' loading='lazy'>
+                    </div>
                 </div>
-            </div>
-            <div class='wp-lazy-gif-overlay'>
-                <span class='gif-label'>GIF</span>
-            </div>
-        </div>";
+                <div class='wp-lazy-gif-overlay'>
+                    <span class='gif-label'>GIF</span>
+                </div>
+            </div>";
 	}
 }

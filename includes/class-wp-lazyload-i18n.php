@@ -24,7 +24,7 @@
  * @subpackage WP_Lazyload/includes
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload_i18n {
+class WP_Lazyload_i18n {
 
 
 	/**

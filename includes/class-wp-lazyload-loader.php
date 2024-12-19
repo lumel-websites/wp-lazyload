@@ -21,7 +21,7 @@
  * @subpackage WP_Lazyload/includes
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload_Loader {
+class WP_Lazyload_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

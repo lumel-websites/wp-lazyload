@@ -20,7 +20,7 @@
  * @subpackage WP_Lazyload/includes
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload_Activator {
+class WP_Lazyload_Activator {
 
 	/**
 	 * Short Description. (use period)

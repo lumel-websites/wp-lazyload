@@ -19,7 +19,7 @@
  * @subpackage WP_Lazyload/admin
  * @author     K Gopal Krishna <kg@lumel.com>
  */
-class Wp_Lazyload_Admin
+class WP_Lazyload_Admin
 {
 
     /**
@@ -65,10 +65,10 @@ class Wp_Lazyload_Admin
          * This function is provided for demonstration purposes only.
          *
          * An instance of this class should be passed to the run() function
-         * defined in Wp_Lazyload_Loader as all of the hooks are defined
+         * defined in WP_Lazyload_Loader as all of the hooks are defined
          * in that particular class.
          *
-         * The Wp_Lazyload_Loader will then create the relationship
+         * The WP_Lazyload_Loader will then create the relationship
          * between the defined hooks and the functions defined in this
          * class.
          */
@@ -88,10 +88,10 @@ class Wp_Lazyload_Admin
          * This function is provided for demonstration purposes only.
          *
          * An instance of this class should be passed to the run() function
-         * defined in Wp_Lazyload_Loader as all of the hooks are defined
+         * defined in WP_Lazyload_Loader as all of the hooks are defined
          * in that particular class.
          *
-         * The Wp_Lazyload_Loader will then create the relationship
+         * The WP_Lazyload_Loader will then create the relationship
          * between the defined hooks and the functions defined in this
          * class.
          */
