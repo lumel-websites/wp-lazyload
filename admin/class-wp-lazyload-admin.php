@@ -97,10 +97,11 @@ class WP_Lazyload_Admin
             '1.19.3',
             true
         );
+        wp_enqueue_media();
         wp_enqueue_script(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'js/wp-lazyload-admin.js',
-            array('jquery', 'select2'),
+            array('jquery', 'media-editor', 'select2'), // Specify 'media-editor' as a dependency
             $this->version,
             true
         );
