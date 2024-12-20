@@ -1,8 +1,6 @@
 (function ($) {
 	'use strict';
 
-	// Debug log function for consistency
-
 	const posterInput = $('#shortcode-poster');
 	const uploadButton = $('#upload-poster-button');
 	const removeButton = $('#remove-poster-button');

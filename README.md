@@ -1,6 +1,6 @@
 # WP Lazyload
 
-* **Contributors:** kgkrishnalmt, puneetlumel  
+* **Contributors:** lumel
 * **Tags:** videos, lazy-loading, youtube, vimeo, wistia, gif, iframe, button customization, shortcode generator  
 * **Requires at least:** 5.8.1  
 * **Tested up to:** 5.8.1  
@@ -38,7 +38,7 @@ This plugin lazy loads videos, GIFs, and iframes using a placeholder image. The 
 
 ### Installation
 
-1. Upload `lazy-videos-1.0.0.zip` to the `/wp-content/plugins/` directory.  
+1. Upload `wp-lazyload-1.0.0.zip` to the `/wp-content/plugins/` directory.  
 2. Activate the plugin via the 'Plugins' menu in WordPress.  
 
 ---
