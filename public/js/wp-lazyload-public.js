@@ -140,5 +140,26 @@
 				parent.find('.wp-lazy-gif-overlay').hide();
 			}
 		});
+
+		$('.wp-lazy-video-link').click(function (ee) {
+
+			ee.preventDefault();
+			var url = $(this).attr('href');
+
+			if (url) {
+				const embedCode = `
+					<iframe 
+						loading="lazy" 
+						src="${url}&autoplay=1&volume=1" 
+						frameborder="0" 
+						scrolling="no" 
+						allow="autoplay" 
+						allowfullscreen 
+						class="iframe_embed">
+					</iframe>`;
+				openPopup(embedCode);
+			}
+
+		});
 	});
 })(jQuery);
