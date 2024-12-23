@@ -105,6 +105,18 @@ Quickly generate shortcodes with the built-in Shortcode Generator located in the
 The generated shortcode can be copied and used on any page or post.
 
 ---
+### Trigger Lazy Load for Video Links
+
+This feature allows anchor elements with the class `.wp-lazy-video-link` to dynamically trigger a wp-lazy-loaded popup for videos. The script identifies the video provider (YouTube, Vimeo, Wistia), extracts the video ID from the URL, and embeds it in a modal popup with autoplay. A close button is provided to dismiss the popup.
+
+---
+
+**Usage Example:**
+```html
+<a class="wp-lazy-video-link" href="https://vimeo.com/yyyyyyy">Watch Video</a>
+```
+
+---
 
 ### Notes  
 - **`type`**: Define content type (video, iframe, or gif).  
