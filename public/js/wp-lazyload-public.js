@@ -143,23 +143,44 @@
 
 		$('.wp-lazy-video-link').click(function (ee) {
 
-			ee.preventDefault();
+			ee.preventDefault();		
 			var url = $(this).attr('href');
-
-			if (url) {
-				const embedCode = `
-					<iframe 
-						loading="lazy" 
-						src="${url}&autoplay=1&volume=1" 
-						frameborder="0" 
-						scrolling="no" 
-						allow="autoplay" 
-						allowfullscreen 
-						class="iframe_embed">
-					</iframe>`;
-				openPopup(embedCode);
+		
+			let provider = '';
+			if (url.search('youtube') > 1) {
+				provider = "youtube";
+			} else if (url.search('wistia') > 1) {
+				provider = "wistia";
+			} else if (url.search('vimeo') > 1) {
+				provider = "vimeo";
+			} else {
+				return; // Exit if provider is unknown
 			}
-
+			var video_code = '';
+			var embed_code = '';
+			var popup_code = '';
+		
+			if (provider == "youtube") {
+				video_code = url.split('=')[1];
+				embed_code = '<iframe loading="lazy" src="https://www.youtube.com/embed/' + video_code + '?autoplay=1&feature=oembed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+			}
+			if (provider == "wistia") {
+				video_code = url.split('/').pop();
+				embed_code = '<iframe loading="lazy" src="https://fast.wistia.net/embed/iframe/' + video_code + '?autoPlay=true&volume=1" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen></iframe>';
+			}
+			if (provider == "vimeo") {
+				video_code = url.split('/')[3];
+				embed_code = '<iframe loading="lazy" src="https://player.vimeo.com/video/' + video_code + '?autoplay=1&volume=1" allowtransparency="true" allow="autoplay" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen></iframe>';
+			}
+			popup_code = '<div class="wp-lazy-videos-popup-overlay">';
+			popup_code += '<div class="wp-lazy-videos-popup">';
+			popup_code += embed_code;
+			popup_code += '<button class="wp-lazy-videos-popup-close"><img alt="Click to close video" style="height: 34px;" src="data:image/gif;base64,R0lGODlhRABEAIABAP///////yH5BAEAAAEALAAAAABEAEQAAAKVjI+py+0Po5y02oszBPxyoGFfR41gWJlnpKJWu5muJzvw/NbLjefjruvRfgiecPg5GI/IzpLZfEKjyelMtbKisFoXltQVfcHhkkxaZtzQ6WIwwG4/42E03Rq/M+/6Xr9/RTTxVkc2aNiWqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGyvbUwAAOw=="></button>';
+			popup_code += '</div>';
+			popup_code += '</div>';
+			$('body').append(popup_code).on('click', '.wp-lazy-videos-popup-overlay, .wp-lazy-videos-popup-close', function (ee) {
+				$('.wp-lazy-videos-popup-overlay').remove();
+			});
 		});
 	});
 })(jQuery);
