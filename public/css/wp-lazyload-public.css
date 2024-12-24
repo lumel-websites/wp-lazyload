@@ -1,0 +1,352 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+ .wp-lazy-video-container{
+    position: relative;
+}
+.video-grid-layout {
+	margin-top: 0;
+}
+.wp-lazy-video-box{
+    display: block;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+}
+
+.wp-lazy-video-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 0;
+}
+
+.wp-lazy-video-wrapper iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wp-lazy-overlay {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+
+.wp-lazy-overlay-hover{
+    background: rgba(83, 84, 84, 0.76);
+    width: 127px;
+    height: 81px;
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+    margin-left: -4rem;
+    margin-top: -3rem;
+    -webkit-transition: all 80ms ease-out 0s;
+    transition: all 80ms ease-out 0s;
+}
+
+.wp-lazy-overlay:hover .wp-lazy-overlay-hover{  
+    background: rgba(83, 84, 84, 0.3);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+.wp-lazy-play-icon{
+    display: block;
+    position: absolute;
+    z-index: 100;
+    color: #fff;
+    left: 50%;
+    top: 50%;
+    margin-left: -4rem;
+    margin-top: -3rem;
+    width: 127px;
+    height: 81px;
+    background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH8AAABRCAYAAAD7G3lVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAATFJREFUeNrs22FtwkAYx+F2QcAkMAfgYBKQwBxMQh1MwiRQB+CgEoaDzkG5S1a+E5IF+n+e5D4ve3+7N0s4mgYAAAAAAAAAAAAA7jFN06cp5MavjuWsTSMzfjWWszORzPizQzmvJpMZ3xYIj28LiG8LpMeffdsCufGrn3LeTS0z/uzLFsiNbwuEx7cFxL9ugY1pZsafdSaaG78abIHc+LaA+MvbAi/+XG5Sww9L2QLtEm/+P/2oUzkfbduexc+LX51L/DdrP09fzvaZf4GVhjf7/Vv3vVFk/bfvMUhg/PoAZG+6efE9Aw+MP/oCSGZ8tz0wvtseGn9w2zPjdyaXF99n9aHx3fbA+G57aHy3PTC+N/mh8b3DD4zvtofGd9tD47vtAAAAAAAAAAAAADymiwADAOSj1JBfF8xMAAAAAElFTkSuQmCC") no-repeat scroll 0px 0px / 127px 81px; 
+    
+}
+
+.wp-lazy-videos-popup-overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(83, 84, 84, 0.3);
+    top: 0;
+    z-index: 999;
+}
+
+.wp-lazy-videos-popup {
+    position: relative;
+    width: 60%;
+    max-width: 1080px;;
+    height:calc(50% - 0px);
+    margin: 0px auto;
+    z-index: 9999;
+    top:20%;
+}
+
+.wp-lazy-videos-popup-close{
+    position: absolute;
+    background: none;
+    border: unset;
+    cursor:pointer;
+}
+
+.wp-lazy-videos-popup iframe{
+    width:100%;
+    height:608px;
+}
+.gif-image {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 2px 18px 0px rgba(0,0,0,.3);
+}
+.icon-hide {
+    opacity: 0;
+}
+
+.icon-hover {
+    opacity: 0;
+}
+
+.wp-lazy-overlay:hover .icon-hover{
+    opacity:1;
+}
+
+.wp-lazy-video-container .wp-lazy-overlay-image {
+	width: 100%;
+	height: auto;
+}
+
+@media only screen and (max-width:1440px){
+    .wp-lazy-videos-popup iframe{
+        height:486px;
+    }
+}
+
+@media only screen and (max-width:1280px){
+    .wp-lazy-videos-popup iframe{
+        height:432px;
+    }
+}
+
+@media only screen and (max-width:1280px){
+    .wp-lazy-videos-popup iframe{
+        height:432px;
+    }
+}
+
+@media only screen and (max-width:768px){
+    .wp-lazy-videos-popup {
+        width:90%;
+    }
+
+    .wp-lazy-videos-popup iframe{
+        height:390px;
+    }
+}
+
+@media only screen and (max-width:400px){
+    .wp-lazy-videos-popup {
+        width:90%;
+    }
+
+    .wp-lazy-videos-popup iframe{
+        height:190px;
+    }
+}
+
+
+.wp-lazy-iframe-container{
+    position: relative;
+}
+
+.wp-lazy-iframe-box{
+    display: block;
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+}
+
+.wp-lazy-iframe-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 0;
+}
+
+.wp-lazy-iframe-wrapper iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wp-lazy-iframe-overlay {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    cursor: pointer;
+    overflow: hidden;
+}
+ 
+.wp-lazy-iframe-overlay-image{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.wp-lazy-iframe-overlay-hover {
+	background: rgba(83, 84, 84, 0.76);
+	width: 127px;
+	height: 81px;
+	position: absolute;
+	z-index: 100;
+	left: 50%;
+	top: 50%;
+	margin-left: -4rem;
+	margin-top: -3rem;
+	-webkit-transition: all 80ms ease-out 0s;
+	transition: all 80ms ease-out 0s;
+}
+
+.wp-lazy-iframe-overlay:hover .wp-lazy-iframe-overlay-hover {
+    background: rgba(83, 84, 84, 0.3);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+
+  .wp-lazy-iframe-button {
+	display: block;
+	position: absolute;
+	z-index: 100;
+	color: #fff;
+	left: 50%;
+	width: 260px;
+	right: 0;
+	left: 0;
+	margin: 0 auto;
+	text-align: center;
+	padding: 10px 20px;
+	font-size: 18px;
+	top: 45%;
+    border-radius: 3px;
+}
+
+.html5-image-img{
+    object-fit: cover;
+}
+/* Main container for GIFs */
+.wp-lazy-gif-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GIF wrapper div for layout consistency */
+.wp-lazy-gif-box {
+    position: relative;
+    width: 100%;
+    padding-top: 56.2963%; /* Aspect ratio */
+    background-color: #000;
+}
+
+/* Poster placeholder for GIF before clicking */
+.wp-lazy-gif-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Overlay style for GIF with 'GIF' label */
+.wp-lazy-gif-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 10px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.wp-lazy-gif-overlay .gif-label {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* GIF loaded after the user clicks */
+.wp-lazy-gif {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Fade-in animation for a smooth reveal */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
