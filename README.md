@@ -136,5 +136,6 @@ This feature allows anchor elements with the class `.wp-lazy-video-link` to dyna
 * **Feat:** Override default placeholder image.  
 * **Feat:** Play icon customization: show, hide, or hover.  
 * **Feat:** Button customization with custom text and styles.
+* **Feat:** Trigger lazy load dynamically for video links using .wp-lazy-video-link. The script detects the provider (YouTube, Vimeo, Wistia) and displays a modal popup with autoplay.
 
 

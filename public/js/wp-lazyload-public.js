@@ -16,7 +16,13 @@
 		} else if (provider === 'wistia') {
 			return url.split('/').pop();
 		} else if (provider === 'vimeo') {
-			return url.split('/').pop();
+			const vimeoParts = url.split('/');
+			const mainPart = vimeoParts.pop().split('?')[0];
+			if (!isNaN(mainPart)) {
+				return mainPart;
+			} else {
+				return vimeoParts.pop();
+			}
 		}
 
 		return '';
@@ -142,45 +148,54 @@
 		});
 
 		$('.wp-lazy-video-link').click(function (ee) {
+			ee.preventDefault();
 
-			ee.preventDefault();		
-			var url = $(this).attr('href');
-		
+			const url = $(this).attr('href');
 			let provider = '';
-			if (url.search('youtube') > 1) {
+			let video_code = '';
+			let embed_code = '';
+
+			if (url.includes('youtube') || url.includes('youtu.be')) {
 				provider = "youtube";
-			} else if (url.search('wistia') > 1) {
+				if (url.includes('youtu.be')) {
+					video_code = url.split('/').pop().split('?')[0];
+				} else if (url.includes('youtube.com/watch')) {
+					const params = new URLSearchParams(url.split('?')[1]);
+					video_code = params.get('v');
+				}
+				embed_code = `<iframe loading="lazy" src="https://www.youtube.com/embed/${video_code}?autoplay=1&feature=oembed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+			} else if (url.includes('wistia')) {
 				provider = "wistia";
-			} else if (url.search('vimeo') > 1) {
+				video_code = url.split('/').pop();
+				embed_code = `<iframe loading="lazy" src="https://fast.wistia.net/embed/iframe/${video_code}?autoPlay=true&volume=1" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" allowfullscreen></iframe>`;
+			} else if (url.includes('vimeo')) {
 				provider = "vimeo";
+				const vimeoParts = url.split('/');
+				const mainPart = vimeoParts.pop().split('?')[0];
+				if (!isNaN(mainPart)) {
+					video_code = mainPart;
+				} else {
+					video_code = vimeoParts.pop();
+				}
+				embed_code = `<iframe loading="lazy" src="https://player.vimeo.com/video/${video_code}?autoplay=1&volume=1" allow="autoplay" frameborder="0" scrolling="no" allowfullscreen></iframe>`;
 			} else {
 				return; // Exit if provider is unknown
 			}
-			var video_code = '';
-			var embed_code = '';
-			var popup_code = '';
-		
-			if (provider == "youtube") {
-				video_code = url.split('=')[1];
-				embed_code = '<iframe loading="lazy" src="https://www.youtube.com/embed/' + video_code + '?autoplay=1&feature=oembed" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
-			}
-			if (provider == "wistia") {
-				video_code = url.split('/').pop();
-				embed_code = '<iframe loading="lazy" src="https://fast.wistia.net/embed/iframe/' + video_code + '?autoPlay=true&volume=1" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen></iframe>';
-			}
-			if (provider == "vimeo") {
-				video_code = url.split('/')[3];
-				embed_code = '<iframe loading="lazy" src="https://player.vimeo.com/video/' + video_code + '?autoplay=1&volume=1" allowtransparency="true" allow="autoplay" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen></iframe>';
-			}
-			popup_code = '<div class="wp-lazy-videos-popup-overlay">';
-			popup_code += '<div class="wp-lazy-videos-popup">';
-			popup_code += embed_code;
-			popup_code += '<button class="wp-lazy-videos-popup-close"><img alt="Click to close video" style="height: 34px;" src="data:image/gif;base64,R0lGODlhRABEAIABAP///////yH5BAEAAAEALAAAAABEAEQAAAKVjI+py+0Po5y02oszBPxyoGFfR41gWJlnpKJWu5muJzvw/NbLjefjruvRfgiecPg5GI/IzpLZfEKjyelMtbKisFoXltQVfcHhkkxaZtzQ6WIwwG4/42E03Rq/M+/6Xr9/RTTxVkc2aNiWqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGyvbUwAAOw=="></button>';
-			popup_code += '</div>';
-			popup_code += '</div>';
-			$('body').append(popup_code).on('click', '.wp-lazy-videos-popup-overlay, .wp-lazy-videos-popup-close', function (ee) {
+
+			const popup_code = `
+				<div class="wp-lazy-videos-popup-overlay">
+					<div class="wp-lazy-videos-popup">
+						${embed_code}
+						<button class="wp-lazy-videos-popup-close">
+							<img alt="Click to close video" style="height: 34px;" src="data:image/gif;base64,R0lGODlhRABEAIABAP///////yH5BAEAAAEALAAAAABEAEQAAAKVjI+py+0Po5y02oszBPxyoGFfR41gWJlnpKJWu5muJzvw/NbLjefjruvRfgiecPg5GI/IzpLZfEKjyelMtbKisFoXltQVfcHhkkxaZtzQ6WIwwG4/42E03Rq/M+/6Xr9/RTTxVkc2aNiWqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGyvbUwAAOw==">
+						</button>
+					</div>
+				</div>`;
+
+			$('body').append(popup_code).on('click', '.wp-lazy-videos-popup-overlay, .wp-lazy-videos-popup-close', function () {
 				$('.wp-lazy-videos-popup-overlay').remove();
 			});
 		});
+
 	});
 })(jQuery);

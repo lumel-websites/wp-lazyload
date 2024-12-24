@@ -5,7 +5,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://github.com/kgkrishnalmt
+ * @link       https://github.com/lumel-websites
  * @since      1.0.0
  *
  * @package    WP_Lazyload
@@ -133,3 +133,4 @@
         <pre id="generated-shortcode">[wp_lazyload url="..." type="video"]</pre>
         <button type="button" id="copy-shortcode" class="button button-secondary">Copy Shortcode</button>
     </div>
+</div>

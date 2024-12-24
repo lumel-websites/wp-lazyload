@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://github.com/kgkrishnalmt
+ * @link       https://github.com/lumel-websites
  * @since      1.0.0
  *
  * @package    WP_Lazyload
@@ -25,7 +25,7 @@
  * @since      1.0.0
  * @package    WP_Lazyload
  * @subpackage WP_Lazyload/includes
- * @author     K Gopal Krishna <kg@lumel.com>
+ * @author     Lumel Technologies <webmasters@lumel.com>
  */
 class WP_Lazyload {
 
