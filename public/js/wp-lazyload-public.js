@@ -49,6 +49,7 @@
 						scrolling="no" 
 						class="wistia_embed" 
 						allowfullscreen 
+						allow="autoplay"
 						title="${title}">
 					</iframe>`;
 			case 'vimeo':
@@ -59,6 +60,7 @@
 						frameborder="0" 
 						scrolling="no" 
 						class="vimeo_embed" 
+						allow="autoplay"
 						allowfullscreen 
 						title="${title}">
 					</iframe>`;
