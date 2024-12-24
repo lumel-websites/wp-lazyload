@@ -1,114 +1,126 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://github.com/kgkrishnalmt/
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+WP Lazyload
 
-== Description ==
+Contributors: lumel
+Tags: videos, lazy-loading, youtube, vimeo, wistia, gif, iframe, button customization, shortcode generator  
+Requires at least: 5.8.1  
+Tested up to: 5.8.1  
+Stable tag: 1.0.0  
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+This is a WordPress plugin that can lazy load videos, GIFs, and iframes to increase your Google PageSpeed score.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+---
 
-A few notes about the sections above:
+Description
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+This plugin lazy loads videos, GIFs, and iframes using a placeholder image. The content loads only when the placeholder is clicked, improving your site's performance and boosting PageSpeed and GTMetrix scores.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+WP Lazyload supports:
+- YouTube, Vimeo, Wistia videos  
+- GIFs  
+- Custom iframes  
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+Admin Feature:  
+An intuitive Shortcode Generator in the admin dashboard makes it easy to generate shortcodes without manual coding.  
 
-== Installation ==
+---
 
-This section describes how to install the plugin and get it working.
+Key Features:
+- Lazy load YouTube, Vimeo, Wistia videos, GIFs, and iframes.  
+- User-friendly shortcode generator tool in the admin panel.  
+- Override default placeholder images.  
+- Play icon modes: show, hide, or hover.  
+- Customizable button overlays with label, color, and styles.  
+- Popup or inline display modes.
 
-e.g.
+---
 
-1. Upload `wp-lazyload.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+Installation
 
-== Frequently Asked Questions ==
+1. Upload wp-lazyload-1.0.0.zip to the /wp-content/plugins/ directory.  
+2. Activate the plugin via the 'Plugins' menu in WordPress.  
 
-= A question that someone might have =
+---
 
-An answer to that question.
+Shortcode Examples  
 
-= What about foo bar? =
+Below are usage examples. Replace placeholders (URL, POSTER, etc.) with your data.
 
-Answer to foo bar dilemma.
+---
 
-== Screenshots ==
+1. YouTube Video Embed  
+Embed a YouTube video with a placeholder:  
+[wp_lazyload url="URL_TO_YOUTUBE_VIDEO" poster="URL_TO_POSTER_IMAGE"]
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+Example:  
+[wp_lazyload url="https://www.youtube.com/watch?v=XXXXXXXX" poster="https://example.com/image.jpg"]
 
-== Changelog ==
+---
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+2. Lazy Load GIF  
+Embed a GIF with lazy loading:  
+[wp_lazyload type="gif" url="URL_TO_GIF" poster="URL_TO_POSTER_IMAGE"]
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+Example:  
+[wp_lazyload type="gif" url="https://example.com/image.gif" poster="https://example.com/poster.jpg"]
 
-== Upgrade Notice ==
+---
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+3. Custom Iframe Embed  
+Embed a lazy-loaded iframe:  
+[wp_lazyload type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE"]
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
+Example:  
+[wp_lazyload type="iframe" url="https://app.powerbi.com/view?r=XXXXXXXX" poster="https://example.com/poster.jpg"]
 
-== Arbitrary section ==
+---
 
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
+4. Popup Display Mode with Button  
+Embed an iframe using a popup button:  
+[wp_lazyload mode="popup" provider="youtube" type="iframe" url="URL_TO_IFRAME" poster="URL_TO_POSTER_IMAGE" play_icon="hover" button="show" button_label="Watch Now" button_text_color="#ffffff" button_bg_color="#0073e6"]
 
-== A brief Markdown Example ==
+---
 
-Ordered list:
+Admin Shortcode Generator  
+Quickly generate shortcodes with the built-in Shortcode Generator located in the WordPress admin. This tool allows you to:
+- Select content type: Video, Iframe, or GIF.  
+- Choose providers: YouTube, Vimeo, Wistia, or Custom.  
+- Set placeholder images, play icon styles, button customization, and more.  
 
-1. Some feature
-1. Another feature
-1. Something else about the plugin
+The generated shortcode can be copied and used on any page or post.
 
-Unordered list:
+---
 
-* something
-* something else
-* third thing
+Trigger Lazy Load for Video Links
 
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
+This feature allows anchor elements with the class wp-lazy-video-link to dynamically trigger a wp-lazy-loaded popup for videos. The script identifies the video provider (YouTube, Vimeo, Wistia), extracts the video ID from the URL, and embeds it in a modal popup with autoplay. A close button is provided to dismiss the popup.
 
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
+---
 
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
+Usage Example:
+<a class="wp-lazy-video-link" href="https://vimeo.com/yyyyyyy">Watch Video</a>
 
-`<?php code(); // goes in backticks ?>`
+---
+
+Notes  
+- type: Define content type (video, iframe, or gif).  
+- poster: Placeholder image for lazy loading.  
+- mode: Set popup for modal display.  
+- button: Show or hide buttons (show/hide).  
+- play_icon: Modes available: show, hide, or hover.
+
+---
+
+Changelog  
+
+1.0.0  
+- Initial Release.  
+- Lazy load YouTube, Vimeo, Wistia videos, GIFs, and iframes.  
+- New Shortcode Generator added to WordPress admin.  
+- Override default placeholder image.  
+- Play icon customization: show, hide, or hover.  
+- Button customization with custom text and styles.
+- Trigger lazy load dynamically for video links using .wp-lazy-video-link. The script detects the provider (YouTube, Vimeo, Wistia) and displays a modal popup with autoplay.
+

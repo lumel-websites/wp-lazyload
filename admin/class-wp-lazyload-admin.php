@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://github.com/kgkrishnalmt
+ * @link       https://github.com/lumel-websites
  * @since      1.0.0
  *
  * @package    WP_Lazyload
@@ -17,7 +17,7 @@
  *
  * @package    WP_Lazyload
  * @subpackage WP_Lazyload/admin
- * @author     K Gopal Krishna <kg@lumel.com>
+ * @author     Lumel Technologies <webmasters@lumel.com>
  */
 class WP_Lazyload_Admin
 {

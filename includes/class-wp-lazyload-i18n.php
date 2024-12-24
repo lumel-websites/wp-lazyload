@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://github.com/kgkrishnalmt
+ * @link       https://github.com/lumel-websites
  * @since      1.0.0
  *
  * @package    WP_Lazyload
@@ -22,7 +22,7 @@
  * @since      1.0.0
  * @package    WP_Lazyload
  * @subpackage WP_Lazyload/includes
- * @author     K Gopal Krishna <kg@lumel.com>
+ * @author     Lumel Technologies <webmasters@lumel.com>
  */
 class WP_Lazyload_i18n {
 
