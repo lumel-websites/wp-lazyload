@@ -1,131 +1,203 @@
 (function ($) {
 	'use strict';
+    // Initialize WordPress color picker
+    $('.color-field').wpColorPicker();
 
-	const posterInput = $('#shortcode-poster');
-	const uploadButton = $('#upload-poster-button');
-	const removeButton = $('#remove-poster-button');
-	const posterPreview = $('#poster-preview');
-	const previewImg = $('#poster-preview-img');
+	const elements = {
+		posterInput: $('#shortcode-poster'),
+		uploadButton: $('#upload-poster-button'),
+		removeButton: $('#remove-poster-button'),
+		posterPreview: $('#poster-preview'),
+		previewImg: $('#poster-preview-img'),
+		shortcodeFields: $('#shortcode-url, #shortcode-type, #shortcode-provider, #shortcode-poster,#shortcode-mode, #shortcode-poster-lazy, #shortcode-play-icon, #shortcode-poster-url,#shortcode-width, #shortcode-height, #shortcode-button, #shortcode-button-label, #shortcode-button-text-color, #shortcode-button-bg-color'),
+		copyButton: $('#copy-shortcode'),
+		shortcodeDisplay: $('#generated-shortcode'),
+		colorInputs: {
+			buttonTextInput: $('#shortcode-button-text-color-input'),
+			buttonBgInput: $('#shortcode-button-bg-color-input')
+		},
+		contentType: $('#shortcode-type'),
+		providerField: $('#shortcode-provider'),
+		playIconField: $('#shortcode-play-icon')
+	};
 
 	const mediaUploader = wp.media({
 		title: 'Select or Upload a Poster Image',
-		button: {
-			text: 'Use This Image'
-		},
+		button: { text: 'Use This Image' },
 		multiple: false
 	});
 
-	uploadButton.on('click', function (e) {
+	// Handle Image Upload
+	elements.uploadButton.on('click', function (e) {
 		e.preventDefault();
 		mediaUploader.open();
 	});
 
 	mediaUploader.on('select', function () {
 		const attachment = mediaUploader.state().get('selection').first().toJSON();
-		posterInput.val(attachment.url);
-		previewImg.attr('src', attachment.url);
-		posterPreview.show();
-		removeButton.show();
-		updateShortcode(); // Update shortcode when the image is selected
+		elements.posterInput.val(attachment.url);
+		elements.previewImg.attr('src', attachment.url);
+		elements.posterPreview.show();
+		elements.removeButton.show();
+		updateShortcode();
 	});
 
-	removeButton.on('click', function (e) {
+	elements.removeButton.on('click', function (e) {
 		e.preventDefault();
-		posterInput.val('');
-		previewImg.attr('src', '');
-		posterPreview.hide();
+		elements.posterInput.val('');
+		elements.previewImg.attr('src', '');
+		elements.posterPreview.hide();
 		$(this).hide();
-		updateShortcode(); // Update shortcode when the image is removed
+		updateShortcode();
 	});
+// Update Shortcode
+function updateShortcode() {
+    const attrs = [];
+    const url = $('#shortcode-url').val();
+    const type = $('#shortcode-type').val();
+    const provider = $('#shortcode-provider').val();
+    const poster = elements.posterInput.val() || $('#shortcode-poster-url').val();
 
-	function updateShortcode() {
+    if (url) attrs.push(`url="${url}"`);
+    if (type) attrs.push(`type="${type}"`);
+    if (provider && provider !== 'custom') attrs.push(`provider="${provider}"`);
+    if (poster) attrs.push(`poster="${poster}"`);
 
-		var attrs = [];
-		var url = $('#shortcode-url').val();
-		var type = $('#shortcode-type').val();
-		var provider = $('#shortcode-provider').val();
-		var poster = $('#shortcode-poster').val() || $('#shortcode-poster-url').val();
+    const optionalFields = {
+        mode: $('#shortcode-mode').val(),
+        posterLazy: $('#shortcode-poster-lazy').val(),
+        playIcon: $('#shortcode-play-icon').val(),
+        width: $('#shortcode-width').val(),
+        height: $('#shortcode-height').val(),
+        buttonVisibility: $('#shortcode-button').val(),
+        buttonLabel: $('#shortcode-button-label').val(),
+        buttonTextColor: $('#shortcode-button-text-color-input').val(),
+        buttonBgColor: $('#shortcode-button-bg-color-input').val()
+    };
 
-		attrs.push(`url="${url}"`);
-		attrs.push(`type="${type}"`);
+    if (optionalFields.mode && optionalFields.mode !== 'inline') attrs.push(`mode="${optionalFields.mode}"`);
+    if (optionalFields.posterLazy && optionalFields.posterLazy === 'false') attrs.push(`poster_lazy="${optionalFields.posterLazy}"`);
+    if (optionalFields.playIcon && optionalFields.playIcon !== 'show') attrs.push(`play_icon="${optionalFields.playIcon}"`);
+    if (optionalFields.width) attrs.push(`provider_width="${optionalFields.width}"`);
+    if (optionalFields.height) attrs.push(`provider_height="${optionalFields.height}"`);
+    if (optionalFields.buttonVisibility && optionalFields.buttonVisibility === 'hide') attrs.push('button="hide"');
+    if (optionalFields.buttonLabel && optionalFields.buttonLabel !== 'View interactive content') attrs.push(`button_label="${optionalFields.buttonLabel}"`);
+    if (optionalFields.buttonTextColor && optionalFields.buttonTextColor !== '#3a3a3a') attrs.push(`button_text_color="${optionalFields.buttonTextColor}"`);
+    if (optionalFields.buttonBgColor && optionalFields.buttonBgColor !== '#ffcd3d') attrs.push(`button_bg_color="${optionalFields.buttonBgColor}"`);
 
-		if (provider !== 'custom') {
-			attrs.push(`provider="${provider}"`);
+    elements.shortcodeDisplay.text(`[wp_lazyload ${attrs.join(' ')}]`);
+}
+
+	function updateFieldsBasedOnType() {
+
+		const selectedType = $('#shortcode-type').val();
+
+		const disableFields = (fields, value) => {
+			fields.forEach(([selector, disableValue]) => {
+				$(selector).prop('disabled', true).val(disableValue);
+			});
+		};
+	
+		const enableFields = (fields) => {
+			fields.forEach(([selector, defaultValue]) => {
+				$(selector).prop('disabled', false).val(defaultValue);
+			});
+		};
+
+		const disableButtons = (selectors) => {
+			selectors.forEach((selector) => {
+				$(selector).prop('disabled', true).addClass('disabled'); // Optionally add a disabled class for styling
+			});
+		};
+
+		const enableButtons = (selectors) => {
+			selectors.forEach((selector) => {
+				$(selector).prop('disabled', false).removeClass('disabled');
+			});
+		};
+
+		const commonFields = [
+			['#shortcode-button-label', 'View interactive content'],
+			['#shortcode-provider', 'custom'],
+			['#shortcode-play-icon', 'show'],
+			['#shortcode-button', 'show'],
+			['#shortcode-button-text-color-input', '#3a3a3a'],
+			['#shortcode-button-bg-color-input', '#ffcd3d'],
+			['#shortcode-mode', 'inline'],
+		];
+
+		const commonButtons = [
+			'.wp-color-result'
+		];
+
+		// Reset all fields to the enabled state
+		enableFields(commonFields);
+		enableButtons(commonButtons);
+
+		// Apply specific conditions
+		if (selectedType === 'iframe') {
+			disableFields([
+				['#shortcode-provider', 'custom'],
+				['#shortcode-play-icon', 'show']
+			]);
+		} else if (selectedType === 'video') {
+			disableFields([
+				['#shortcode-button', 'show'],
+				['#shortcode-button-label', 'View interactive content'],
+				['#shortcode-button-text-color-input', '#3a3a3a'],
+				['#shortcode-button-bg-color-input', '#ffcd3d'],
+			]);
+			disableButtons(['.wp-color-result']);
+		} else if (selectedType === 'gif') {
+			disableFields([
+				['#shortcode-provider', 'custom'],
+				['#shortcode-play-icon', 'show'],
+				['#shortcode-button', 'show'],
+				['#shortcode-button-text-color-input', '#3a3a3a'],
+				['#shortcode-button-bg-color-input', '#ffcd3d'],
+				['#shortcode-mode', 'inline'],
+			]);
+			disableButtons(['.wp-color-result']);
 		}
-
-		if (poster) {
-			attrs.push(`poster="${poster}"`);
-		}
-
-		var mode = $('#shortcode-mode').val();
-		if (mode !== 'inline') {
-			attrs.push(`mode="${mode}"`);
-		}
-
-		var posterLazy = $('#shortcode-poster-lazy').val();
-		if (posterLazy === 'false') {
-			attrs.push(`poster_lazy="${posterLazy}"`);
-		}
-
-		var playIcon = $('#shortcode-play-icon').val();
-		if (playIcon !== 'show') {
-			attrs.push(`play_icon="${playIcon}"`);
-		}
-
-		var width = $('#shortcode-width').val();
-		if (width) {
-			attrs.push(`provider_width="${width}"`);
-		}
-
-		var height = $('#shortcode-height').val();
-		if (height) {
-			attrs.push(`provider_height="${height}"`);
-		}
-
-		var buttonVisibility = $('#shortcode-button').val();
-		if (buttonVisibility === 'hide') {
-			attrs.push('button="hide"');
-		}
-
-		var buttonLabel = $('#shortcode-button-label').val();
-		if (buttonLabel !== 'View interactive content') {
-			attrs.push(`button_label="${buttonLabel}"`);
-		}
-
-		var buttonTextColor = $('#shortcode-button-text-color').val();
-		if (buttonTextColor !== '#3a3a3a') {
-			attrs.push(`button_text_color="${buttonTextColor}"`);
-		}
-
-		var buttonBgColor = $('#shortcode-button-bg-color').val();
-		if (buttonBgColor !== '#ffcd3d') {
-			attrs.push(`button_bg_color="${buttonBgColor}"`);
-		}
-
-		var shortcode = `[wp_lazyload ${attrs.join(' ')}]`;
-		$('#generated-shortcode').text(shortcode);
 	}
+	
+	// Trigger on change
+	$('#shortcode-type').on('change', function () {
+		updateFieldsBasedOnType();
+	});
+	
 
-	// Update shortcode on any input change
-	$('#shortcode-url, #shortcode-type, #shortcode-provider, #shortcode-poster, ' +
-		'#shortcode-mode, #shortcode-poster-lazy, #shortcode-play-icon, #shortcode-poster-url,' +
-		'#shortcode-width, #shortcode-height, #shortcode-button, ' +
-		'#shortcode-button-label, #shortcode-button-text-color, #shortcode-button-bg-color')
-		.on('input change', function (event) {
-			updateShortcode();
-		});
-
-	// Copy shortcode to clipboard
-	$('#copy-shortcode').click(function () {
-		var $temp = $("<textarea>");
-		$("body").append($temp);
-		$temp.val($('#generated-shortcode').text()).select();
-		document.execCommand("copy");
-		$temp.remove();
+	// Copy Shortcode to Clipboard
+	elements.copyButton.on('click', function () {
+		const temp = $('<textarea>');
+		$('body').append(temp);
+		temp.val(elements.shortcodeDisplay.text()).select();
+		document.execCommand('copy');
+		temp.remove();
 		alert('Shortcode copied to clipboard!');
 	});
 
-	// Initial shortcode generation
+	// Update Shortcode on Input Changes
+	elements.shortcodeFields.on('input change', updateShortcode);
+
+	// Initial Shortcode Generation
 	updateShortcode();
 
+	updateFieldsBasedOnType();
+
+	$("#shortcode-button-bg-color-input").wpColorPicker(
+		'option',
+		'change',
+		(event, ui) => {
+			updateShortcode();
+		}
+	);
+
+	$("#shortcode-button-text-color-input").wpColorPicker(
+		'option',
+		'change',
+		(event, ui) => {
+			updateShortcode();
+		}
+	);
 })(jQuery);
