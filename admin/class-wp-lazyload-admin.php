@@ -60,6 +60,7 @@ class WP_Lazyload_Admin
      */
     public function enqueue_styles()
     {
+        wp_enqueue_style('wp-color-picker'); // Add the color picker stylesheet
         wp_enqueue_style(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'css/wp-lazyload-admin.css',
@@ -105,7 +106,6 @@ class WP_Lazyload_Admin
             $this->version,
             true
         );
-        wp_enqueue_style('wp-color-picker'); // Add the color picker stylesheet
 
     }
 

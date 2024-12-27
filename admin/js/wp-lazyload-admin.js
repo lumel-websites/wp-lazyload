@@ -13,9 +13,7 @@
 		copyButton: $('#copy-shortcode'),
 		shortcodeDisplay: $('#generated-shortcode'),
 		colorInputs: {
-			buttonTextPicker: $('#shortcode-button-text-color-picker'),
 			buttonTextInput: $('#shortcode-button-text-color-input'),
-			buttonBgPicker: $('#shortcode-button-bg-color-picker'),
 			buttonBgInput: $('#shortcode-button-bg-color-input')
 		},
 		contentType: $('#shortcode-type'),
@@ -73,8 +71,8 @@ function updateShortcode() {
         height: $('#shortcode-height').val(),
         buttonVisibility: $('#shortcode-button').val(),
         buttonLabel: $('#shortcode-button-label').val(),
-        buttonTextColor: $('#shortcode-button-text-color').val(),
-        buttonBgColor: $('#shortcode-button-bg-color').val()
+        buttonTextColor: $('#shortcode-button-text-color-input').val(),
+        buttonBgColor: $('#shortcode-button-bg-color-input').val()
     };
 
     if (optionalFields.mode && optionalFields.mode !== 'inline') attrs.push(`mode="${optionalFields.mode}"`);
@@ -90,23 +88,9 @@ function updateShortcode() {
     elements.shortcodeDisplay.text(`[wp_lazyload ${attrs.join(' ')}]`);
 }
 
-
-	// Sync Color Picker with Text Input
-	function setupColorPicker(input, picker) {
-		picker.on('input change', () => input.val(picker.val()));
-		input.on('input', () => {
-			const colorValue = input.val();
-			if (/^#([0-9A-F]{3}){1,2}$/i.test(colorValue)) picker.val(colorValue);
-		});
-	}
-
-	setupColorPicker(elements.colorInputs.buttonTextInput, elements.colorInputs.buttonTextPicker);
-	setupColorPicker(elements.colorInputs.buttonBgInput, elements.colorInputs.buttonBgPicker);
-
 	function updateFieldsBasedOnType() {
-		console.log("gggggggggg", $('#shortcode-type').val());
-		
-		const selectedType =  $('#shortcode-type').val();
+
+		const selectedType = $('#shortcode-type').val();
 
 		const disableFields = (fields, value) => {
 			fields.forEach(([selector, disableValue]) => {
@@ -119,22 +103,37 @@ function updateShortcode() {
 				$(selector).prop('disabled', false).val(defaultValue);
 			});
 		};
-	
+
+		const disableButtons = (selectors) => {
+			selectors.forEach((selector) => {
+				$(selector).prop('disabled', true).addClass('disabled'); // Optionally add a disabled class for styling
+			});
+		};
+
+		const enableButtons = (selectors) => {
+			selectors.forEach((selector) => {
+				$(selector).prop('disabled', false).removeClass('disabled');
+			});
+		};
+
 		const commonFields = [
-			['#shortcode-button-label',	'View interactive content'],
+			['#shortcode-button-label', 'View interactive content'],
 			['#shortcode-provider', 'custom'],
 			['#shortcode-play-icon', 'show'],
 			['#shortcode-button', 'show'],
 			['#shortcode-button-text-color-input', '#3a3a3a'],
-			['#shortcode-button-text-color-picker', '#3a3a3a'],
 			['#shortcode-button-bg-color-input', '#ffcd3d'],
-			['#shortcode-button-bg-color-picker', '#ffcd3d'],
 			['#shortcode-mode', 'inline'],
 		];
-	
+
+		const commonButtons = [
+			'.wp-color-result'
+		];
+
 		// Reset all fields to the enabled state
 		enableFields(commonFields);
-	
+		enableButtons(commonButtons);
+
 		// Apply specific conditions
 		if (selectedType === 'iframe') {
 			disableFields([
@@ -144,23 +143,21 @@ function updateShortcode() {
 		} else if (selectedType === 'video') {
 			disableFields([
 				['#shortcode-button', 'show'],
-				['#shortcode-button-label',	'View interactive content'],
+				['#shortcode-button-label', 'View interactive content'],
 				['#shortcode-button-text-color-input', '#3a3a3a'],
-				['#shortcode-button-text-color-picker', '#3a3a3a'],
 				['#shortcode-button-bg-color-input', '#ffcd3d'],
-				['#shortcode-button-bg-color-picker', '#ffcd3d'],
 			]);
+			disableButtons(['.wp-color-result']);
 		} else if (selectedType === 'gif') {
 			disableFields([
 				['#shortcode-provider', 'custom'],
 				['#shortcode-play-icon', 'show'],
 				['#shortcode-button', 'show'],
 				['#shortcode-button-text-color-input', '#3a3a3a'],
-				['#shortcode-button-text-color-picker', '#3a3a3a'],
 				['#shortcode-button-bg-color-input', '#ffcd3d'],
-				['#shortcode-button-bg-color-picker', '#ffcd3d'],
 				['#shortcode-mode', 'inline'],
 			]);
+			disableButtons(['.wp-color-result']);
 		}
 	}
 	
@@ -188,5 +185,19 @@ function updateShortcode() {
 
 	updateFieldsBasedOnType();
 
+	$("#shortcode-button-bg-color-input").wpColorPicker(
+		'option',
+		'change',
+		(event, ui) => {
+			updateShortcode();
+		}
+	);
 
+	$("#shortcode-button-text-color-input").wpColorPicker(
+		'option',
+		'change',
+		(event, ui) => {
+			updateShortcode();
+		}
+	);
 })(jQuery);

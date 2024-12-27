@@ -118,8 +118,12 @@
             <th scope="row">Button Text Color</th>
             <td>
                 <div class="color-input-container">
-                    <input type="text" id="shortcode-button-text-color-input" class="regular-text" placeholder="Enter HEX code, e.g., #3a3a3a" value="#3a3a3a" />
-                    <input type="color" id="shortcode-button-text-color-picker" value="#3a3a3a" />
+                    <input
+                        type="text"
+                        id="shortcode-button-text-color-input"
+                        name="shortcode-button-text-color-input"
+                        value="#3a3a3a"
+                        data-default-color="#3a3a3a" />
                 </div>
             </td>
         </tr>
@@ -127,8 +131,12 @@
             <th scope="row">Button Background Color</th>
             <td>
                 <div class="color-input-container">
-                    <input type="text" id="shortcode-button-bg-color-input" class="regular-text" placeholder="Enter HEX code, e.g., #ffcd3d" value="#ffcd3d" />
-                    <input type="color" id="shortcode-button-bg-color-picker" value="#ffcd3d" />
+                    <input
+                        type="text"
+                        id="shortcode-button-bg-color-input"
+                        name="shortcode-button-bg-color-input"
+                        value="#ffcd3d"
+                        data-default-color="#ffcd3d" />
                 </div>
             </td>
         </tr>
