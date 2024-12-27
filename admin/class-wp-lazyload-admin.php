@@ -101,10 +101,12 @@ class WP_Lazyload_Admin
         wp_enqueue_script(
             $this->plugin_name,
             plugin_dir_url(__FILE__) . 'js/wp-lazyload-admin.js',
-            array('jquery', 'media-editor', 'select2'), // Specify 'media-editor' as a dependency
+            array('jquery', 'media-editor', 'select2','wp-color-picker'), // Specify 'media-editor' as a dependency
             $this->version,
             true
         );
+        wp_enqueue_style('wp-color-picker'); // Add the color picker stylesheet
+
     }
 
     /**
@@ -197,12 +199,16 @@ class WP_Lazyload_Admin
         $button_text_color = get_option('button_text_color', '#3a3a3a');
     ?>
         <input
-            type="color"
+            type="text"
             id="button_text_color"
             name="button_text_color"
-            value="<?php echo esc_attr($button_text_color); ?>" />
+            value="<?php echo esc_attr($button_text_color); ?>"
+            class="color-field"
+            data-default-color="#3a3a3a" />
+        <p class="description">Choose or enter the color for button text.</p>
     <?php
     }
+    
 
     /**
      * Callback for button background color setting
@@ -212,12 +218,16 @@ class WP_Lazyload_Admin
         $button_bg_color = get_option('button_bg_color', '#ffcd3d');
     ?>
         <input
-            type="color"
+            type="text"
             id="button_bg_color"
             name="button_bg_color"
-            value="<?php echo esc_attr($button_bg_color); ?>" />
+            value="<?php echo esc_attr($button_bg_color); ?>"
+            class="color-field"
+            data-default-color="#ffcd3d" />
+        <p class="description">Choose or enter the background color for the button.</p>
     <?php
     }
+    
 
     /**
      * Callback for play icon visibility setting
