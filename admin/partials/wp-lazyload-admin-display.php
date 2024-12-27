@@ -117,13 +117,29 @@
         <tr>
             <th scope="row">Button Text Color</th>
             <td>
-                <input type="color" id="shortcode-button-text-color" value="#3a3a3a">
+                <div class="color-input-container">
+                    <input
+                        type="text"
+                        id="shortcode-button-text-color-input"
+                        name="shortcode-button-text-color-input"
+                        value="#3a3a3a"
+                        class="color-field"
+                        data-default-color="#3a3a3a" />
+                </div>
             </td>
         </tr>
         <tr>
             <th scope="row">Button Background Color</th>
             <td>
-                <input type="color" id="shortcode-button-bg-color" value="#ffcd3d">
+                <div class="color-input-container">
+                    <input
+                        type="text"
+                        id="shortcode-button-bg-color-input"
+                        name="shortcode-button-bg-color-input"
+                        value="#ffcd3d"
+                        class="color-field"
+                        data-default-color="#ffcd3d" />
+                </div>
             </td>
         </tr>
     </table>
